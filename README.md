@@ -1,0 +1,2 @@
+# GdePara
+novikov pet project
