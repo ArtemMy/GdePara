@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'gdePara.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'novikov_db',
-        'USER': 'artem',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'novGdeArt$tt_db',
+        'USER': 'novGdeArt',
         'PASSWORD': 'novikov<3',
-        'HOST': '127.0.0.1',
+        'HOST': 'novGdeArt.mysql.pythonanywhere-services.com',
         'PORT': '5432',
     }
 }
