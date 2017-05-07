@@ -25,7 +25,7 @@ SECRET_KEY = 'es&jzx!-3d+r=t21c6)401a12$5rm$(rox7+p1=#vk1&e_wq#-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','novgdeart.pythonanywhere.com']
 
 
 # Application definition
@@ -74,23 +74,17 @@ WSGI_APPLICATION = 'gdePara.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'novikov_db',
+        'USER': 'artem',
+        'PASSWORD': 'novikov<3',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg3',
-#        'NAME': 'paradb',
-#        'USER': 'artem',
-#        'PASSWORD': 'novikov',
-#        'HOST': '127.0.0.1',
-#        'PORT': '5432',
-#    }
-#}
 
 
 # Password validation
