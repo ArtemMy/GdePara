@@ -1,2 +1,3 @@
 # GdePara
-novikov pet project
+
+novikov pet project concerning whereabouts of one's class
