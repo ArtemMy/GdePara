@@ -1,1 +1,1 @@
-web: gunicorn NovikovTT.wsgi
+web: gunicorn core.wsgi
