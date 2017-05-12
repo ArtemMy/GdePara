@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Profile</h2>
+	{% csrf_token %}
+	{% if user.is_lecturer == True %}<p>Преподаватель</p> {% else %} <p>Студент</p>{% endif %}
+		<p>Email: {{user.email}}</p>
+		<p>Имя: {{user.first_name}} {{user.middle_name}} {{user.last_name}}</p>
+		<p>Номер: {{user.phone_number}}</p>
+	<button type="button" onclick="location.href='{% url 'profile_edit' %}'">Редактировать</button>
+	<button type="button">Присоединиться к курсу</button>
+	<button type="button">Присоединиться к группе</button>
+{% endblock %}
