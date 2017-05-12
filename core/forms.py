@@ -20,3 +20,11 @@ class ProfileForm(forms.Form):
     name = forms.CharField(max_length=150)
     def __str__(self):
         return self.title
+
+class CreateCourseForm(forms.Form):
+    name = forms.CharField(max_length=254)
+    report_type = forms.CharField(max_length=254)
+    beginning_date = forms.DateTimeField()
+    ending_date = forms.DateTimeField()
+    def __str__(self):
+        return "Form"

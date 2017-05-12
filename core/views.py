@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from core.forms import LoginForm, ProfileRegistrationForm
+from core.forms import *
 from core.models import UserProfile, Group
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -76,6 +76,22 @@ def SignupView(request):
     else:
         form = ProfileRegistrationForm()
     return render(request, 'signup.html', {'form': form})
+
+def create_course(request):
+    if request.method == 'POST':
+        form = CreateCourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            name = request.POST.get('name', '')
+            report_type = request.POST.get('report_type', '')
+            beginning_date = request.POST.get('beginning_date', '')
+            ending_date = request.POST.get('ending_date', '')
+            new_course = models.Course(name=name, report_type=report_type, beginning_date=beginning_date, ending_date=ending_date)
+            new_course.save()
+            return redirect('home')
+    else:
+        form = CreateCourseForm()
+    return render(request, 'create_course.html', {'form': form})
 
 def index(request):
     return HttpResponse("Hello, world. Novikov <3.")

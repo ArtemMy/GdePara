@@ -25,12 +25,15 @@ class Group(models.Model):
     starosta_id = models.OneToOneField(UserProfile)
     number = models.CharField(max_length=30)
     
+UserProfile.group = models.ForeignKey(Group, on_delete=models.CASCADE)
+
 class Course(models.Model):
+    name = models.CharField(max_length=254)
     report_type = models.CharField(max_length=254)
     beginning_date = models.DateTimeField()
     ending_date = models.DateTimeField()
-    courses = models.ManyToManyField(UserProfile)
-    courses = models.ManyToManyField(Group)
+    users = models.ManyToManyField(UserProfile)
+    groups = models.ManyToManyField(Group)
 
 class Subject(models.Model):
     name = models.CharField(max_length=254)

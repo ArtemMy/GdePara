@@ -6,6 +6,7 @@
   {% if user.is_authenticated %}
       Привет {{ user.username }}!
       <a href="{% url 'profile' %}">просмотр профиля</a>
+      <a href="{% url 'create_course' %}">создать курс</a>
       <a href="{% url 'auth_logout' %}">выход</a>
     {% else %}
       <a href="{% url 'auth_login' %}">вход</a>

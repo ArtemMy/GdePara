@@ -38,5 +38,6 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'^index/$', core_views.index, name='index'),
     url(r'^profile/$', core_views.profile_read, name='profile'),
+    url(r'^create_course/$', core_views.create_course, name='create_course'),
     url(r'^admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
