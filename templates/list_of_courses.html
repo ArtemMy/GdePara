@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>List of Courses</h2>
+    {% csrf_token %}
+    {% for c in courses %}
+    <div>
+        {{ c.name }}
+    </div>
+    {% endfor %}
+{% endblock %}

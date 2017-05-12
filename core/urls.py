@@ -40,5 +40,6 @@ urlpatterns = [
     url(r'^profile/$', core_views.profile_read, name='profile'),
     url(r'^create_course/$', core_views.create_course, name='create_course'),
     url(r'^profile_edit/$', core_views.profile_edit, name='profile_edit'),
+    url(r'^list_of_courses/$', core_views.view_courses, name='list_of_courses'),
     url(r'^admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

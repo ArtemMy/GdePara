@@ -19,6 +19,10 @@ def profile_read(request):
     else:
         return render(request, 'index.html')
 
+def view_courses(request):
+    courses = Course.objects.all()
+    return render(request, 'list_of_courses.html', {'courses': courses})
+
 def profile_edit(request):
     if request.user.is_authenticated() == False:
         return render(request, 'index.html')

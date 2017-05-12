@@ -7,6 +7,7 @@
       Привет {{ user.username }}!
       <a href="{% url 'profile' %}">просмотр профиля</a>
       <a href="{% url 'create_course' %}">создать курс</a>
+      <a href="{% url 'list_of_courses' %}">просмотр списка курсов</a>
       <a href="{% url 'auth_logout' %}">выход</a>
     {% else %}
       <a href="{% url 'auth_login' %}">вход</a>
