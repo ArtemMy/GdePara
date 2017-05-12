@@ -2,30 +2,42 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
+from django.template import RequestContext
 from core.forms import *
 from core.models import UserProfile, Group
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 
 def profile_read(request):
-    user = UserProfile(request.user)
+    profile = UserProfile.objects.get(user=request.user)
     if request.user.is_authenticated():
-        return render(request, 'profile_read.html', {'user': user})
+#        return render_to_response('profile_read.html', RequestContext(request, {'user': profile}))
+        return render(request, 'profile_read.html', {'user': profile})
     else:
         return render(request, 'index.html')
 
 def profile_edit(request):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
     if request.method == 'POST':
-        form = NameForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('/thanks/')
-    else:
-        form = NameForm()
-    return render(request, 'name.html', {'form': form})
+        profile = UserProfile.objects.get(user=request.user)
+        profile.is_lecturer = bool(request.POST.get("is_lecturer", False))
+        profile.first_name = request.POST["first_name"]
+        profile.middle_name = request.POST.get("middle_name", "")
+        profile.last_name = request.POST["last_name"]
+        profile.phone_number = request.POST.get("phone_number", "")
+        profile.email = request.POST["email"]
+        profile.degree = request.POST.get("degree", "")
+
+        profile.save()
+        return HttpResponseRedirect('/profile')
+
+    profile = UserProfile.objects.get(user=request.user)
+    form = UserProfileForm(instance = profile)
+    return render(request, 'profile_edit.html', {'form': form})
 
 def LoginView(request):
     if request.method == 'POST':
@@ -56,13 +68,13 @@ def SignupView(request):
             return render(request, 'signup.html', {'form': form, 'error' : "email already taken"})
         else:
             profile = UserProfile(user = user)
-            profile.is_lecturer = bool(request.POST["is_lecturer"])
+            profile.is_lecturer = bool(request.POST.get("is_lecturer", False))
             profile.first_name = request.POST["first_name"]
-            profile.middle_name = request.POST["middle_name"]
+            profile.middle_name = request.POST.get("middle_name", "")
             profile.last_name = request.POST["last_name"]
-            profile.phone_number = request.POST["phone_number"]
+            profile.phone_number = request.POST.get("phone_number", "")
             profile.email = request.POST["email"]
-            profile.degree = request.POST["degree"]
+            profile.degree = request.POST.get("degree", "")
             profile.save()
 
             group = Group(number = "100/1")
@@ -72,7 +84,7 @@ def SignupView(request):
 
             form = ProfileRegistrationForm()
             login(request, user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/index')
     else:
         form = ProfileRegistrationForm()
     return render(request, 'signup.html', {'form': form})
