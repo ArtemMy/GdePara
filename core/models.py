@@ -12,18 +12,17 @@ from django.contrib.auth.models import BaseUserManager
 import logging
 
 class UserProfile(models.Model):
-    user = models.ForeignKey('User')
+    user = models.ForeignKey('auth.User')
     first_name = models.CharField(max_length=30)
     middle_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
     degree = models.CharField(max_length=30)
-    is_lecturer = models.BooleanField(initial=False)
-    group_id = models.ForeignKey(Group, on_delete=models.CASCADE) #При удалении группы удаляются все юзеры
+    is_lecturer = models.BooleanField()
 
 class Group(models.Model):
-    starosta_id = models.OneToOneField(UserProfile, on_delete=models.SET_NULL)
+    starosta_id = models.OneToOneField(UserProfile)
     number = models.CharField(max_length=30)
     
 class Course(models.Model):
@@ -35,7 +34,7 @@ class Course(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=254)
-    is_necessary = models.BooleanField(initial=False)
+    is_necessary = models.BooleanField()
 
 class CommonMaterial(models.Model):
     text = models.TextField()
@@ -45,7 +44,7 @@ class Class(models.Model):
     conspect = models.TextField()
     homework = models.TextField()
     data = models.DateTimeField()
-    is_canceled = models.BooleanField(initial=False)
+    is_canceled = models.BooleanField()
     group_id = models.ForeignKey(Course, on_delete=models.CASCADE)
 
 class ClassFormat(models.Model):
@@ -64,20 +63,24 @@ class CourseMaterial(models.Model):
 
 ######################################
 
-def user_registered_callback(sender, user, request, **kwargs):
-    profile = ExUserProfile(user = user)
+# def user_registered_callback(sender, user, request, **kwargs):
+#     profile = UserProfile(user = user)
 
-    profile.is_lecturer = bool(request.POST["is_lecturer"])
-    profile.first_name = string(request.POST["first_name"])
-    profile.middle_name = bool(request.POST["middle_name"])
-    profile.last_name = bool(request.POST["last_name"])
-    profile.phone_number = bool(request.POST["phone_number"])
-    profile.email = bool(request.POST["email"])
-    profile.degree = bool(request.POST["degree"])
+#     profile.is_lecturer = bool(request.POST["is_lecturer"])
+#     profile.first_name = request.POST["first_name"]
+#     profile.middle_name = request.POST["middle_name"]
+#     profile.last_name = request.POST["last_name"]
+#     profile.phone_number = request.POST["phone_number"]
+#     profile.email = request.POST["email"]
+#     profile.degree = request.POST["degree"]
 
-    profile.save()
+#     group = Group(number = "100/1")
+#     group.starosta_id = profile
+#     group.save()
 
-user_registered.connect(user_registered_callback)
+#     profile.save()
+
+# user_registered.connect(user_registered_callback)
 
 class EmailBackend(object):
     def authenticate(self, username=None, password=None, **kwargs):
@@ -89,6 +92,6 @@ class EmailBackend(object):
         except UserModel.DoesNotExist:
             return None
         else:
-            if getattr(user, 'is_active', False) and  user.check_password(password):
+            if user.check_password(password):
                 return user
         return None

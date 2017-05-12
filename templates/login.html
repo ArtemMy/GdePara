@@ -5,6 +5,7 @@
 {% block content %}
   <h2>Login</h2>
   <form method="post">
+	{% if error %}<p><strong>{{ error }}</strong></p>{% endif %}
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Login</button>
