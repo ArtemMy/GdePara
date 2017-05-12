@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+      Привет {{ user.username }}!
+      <a href="{% url 'profile' %}">просмотр профиля</a>
+      <a href="{% url 'auth_logout' %}">выход</a>
+    {% else %}
+      <a href="{% url 'auth_login' %}">вход</a>
+      <a href="{% url 'registration_register' %}">зарегистрироваться</a>
+    {% endif %}
+  <h2>Это - главная</h2>
+	{% load static %}
+	<img src="{% static "tTCXD7y1FFA.jpg" %}" alt="Это - Ваня"/>
+{% endblock %}

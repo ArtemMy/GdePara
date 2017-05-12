@@ -1,0 +1,5 @@
+noenv/
+__pycache__/
+*.py[cod]
+*.log
+*.pot

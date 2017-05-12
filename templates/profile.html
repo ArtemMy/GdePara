@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Profile</h2>
+  <form method="post">
+    {{ form.as_p }}
+    <button type="button">Присоединиться к курсу</button>
+    <button type="button">Присоединиться к группе</button>
+</form>
+{% endblock %}
