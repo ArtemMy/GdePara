@@ -3,6 +3,7 @@
 {% block content %}
   <h2>Sign up</h2>
   <form method="post">
+	{% if error %}<p><strong>Такой пользователь уже есть</strong></p>{% endif %}
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Sign up</button>
