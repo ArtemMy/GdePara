@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from core.forms import *
-from core.models import UserProfile, Group
+from core.models import *
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
@@ -93,12 +93,11 @@ def create_course(request):
     if request.method == 'POST':
         form = CreateCourseForm(request.POST)
         if form.is_valid():
-            form.save()
             name = request.POST.get('name', '')
             report_type = request.POST.get('report_type', '')
             beginning_date = request.POST.get('beginning_date', '')
             ending_date = request.POST.get('ending_date', '')
-            new_course = models.Course(name=name, report_type=report_type, beginning_date=beginning_date, ending_date=ending_date)
+            new_course = Course(name=name, report_type=report_type, beginning_date=beginning_date, ending_date=ending_date)
             new_course.save()
             return redirect('home')
     else:

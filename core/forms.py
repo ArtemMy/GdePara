@@ -42,5 +42,3 @@ class CreateCourseForm(forms.Form):
     report_type = forms.CharField(max_length=254)
     beginning_date = forms.DateTimeField()
     ending_date = forms.DateTimeField()
-    def __str__(self):
-        return "Form"
