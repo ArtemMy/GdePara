@@ -30,8 +30,8 @@ UserProfile.group = models.ForeignKey(Group, on_delete=models.CASCADE)
 class Course(models.Model):
     name = models.CharField(max_length=254)
     report_type = models.CharField(max_length=254)
-    beginning_date = models.DateTimeField()
-    ending_date = models.DateTimeField()
+    beginning_date = models.DateField()
+    ending_date = models.DateField()
     users = models.ManyToManyField(UserProfile)
     groups = models.ManyToManyField(Group)
 

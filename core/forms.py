@@ -3,6 +3,7 @@ from django.utils import timezone
 from registration.forms import RegistrationFormUniqueEmail
 from core.models import UserProfile
 from django.forms import ModelForm
+from django.contrib.admin.widgets import AdminDateWidget 
 
 class UserProfileForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -40,5 +41,5 @@ class ProfileForm(forms.Form):
 class CreateCourseForm(forms.Form):
     name = forms.CharField(max_length=254)
     report_type = forms.CharField(max_length=254)
-    beginning_date = forms.DateTimeField()
-    ending_date = forms.DateTimeField()
+    beginning_date = forms.DateField(widget = AdminDateWidget)
+    ending_date = forms.DateField(widget = AdminDateWidget)
