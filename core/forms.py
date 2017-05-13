@@ -1,14 +1,14 @@
 from django import forms
 from django.utils import timezone
 from registration.forms import RegistrationFormUniqueEmail
-from core.models import UserProfile
+from core.models import UserProfile, Course
 from django.forms import ModelForm
-from django.contrib.admin.widgets import AdminDateWidget 
+from datetimewidget.widgets import DateWidget
 
 class UserProfileForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
-        self.fields['email'].required = True
+        self.fields['email'].required = True    
         self.fields['is_lecturer'].required = False
         self.fields['first_name'].required = False
         self.fields['middle_name'].required = False
@@ -38,8 +38,10 @@ class ProfileForm(forms.Form):
     def __str__(self):
         return self.title
 
-class CreateCourseForm(forms.Form):
-    name = forms.CharField(max_length=254)
-    report_type = forms.CharField(max_length=254)
-    beginning_date = forms.DateField(widget = AdminDateWidget)
-    ending_date = forms.DateField(widget = AdminDateWidget)
+class CourseEditForm(ModelForm):
+    class Meta:
+        model = Course
+        fields = ['name', 'report_type', 'beginning_date', 'ending_date']
+        widgets = {
+            'beginning_date': forms.DateInput(attrs={'class':'datepicker'}),
+        }

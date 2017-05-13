@@ -10,8 +10,12 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $( function() {
-    $( "#beginning_date" ).datepicker();
-    $( "#ending_date" ).datepicker();
+    $( "#id_beginning_date" ).datepicker({
+      dateFormat: "yy-mm-dd"
+          });
+    $( "#id_ending_date" ).datepicker({
+            dateFormat: "yy-mm-dd"
+          });
   } );
   </script>
 </head>
@@ -19,9 +23,9 @@
 <form method="post">
     {% csrf_token %}
     {{ form }}
-	<p>Date: <input type="text" id="beginning_date"></p>
-	<p>Date: <input type="text" id="ending_date"></p>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Добавить">
+    <button type="button" class="btn btn-xl" onclick='location.href="{{request.path}}delete"'>Удалить курс</button> 
+    <button type="button" class="btn btn-xl" onclick="javascript:history.go(-1);">Отмена</button> 
 <!doctype html>
 <html lang="en">
 </html>

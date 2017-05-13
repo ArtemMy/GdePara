@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from core.forms import *
 from core.models import *
 from django.http import HttpResponseRedirect
@@ -18,10 +19,6 @@ def profile_read(request):
         return render(request, 'profile_read.html', {'user': profile})
     else:
         return render(request, 'index.html')
-
-def view_courses(request):
-    courses = Course.objects.all()
-    return render(request, 'list_of_courses.html', {'courses': courses})
 
 def profile_edit(request):
     if request.user.is_authenticated() == False:
@@ -107,6 +104,27 @@ def create_course(request):
     else:
         form = CreateCourseForm()
     return render(request, 'create_course.html', {'form': form})
+
+def view_courses(request):
+    courses = Course.objects.all()
+    return render(request, 'list_of_courses.html', {'courses': courses})
+
+class CourseCreate(CreateView):
+    fields = ('name', 'report_type', 'beginning_date', 'ending_date')
+    model = Course
+    success_url = '/list_of_courses'
+    template_name = 'cource_form.html'
+
+class CourseEdit(UpdateView):
+    model = Course
+    fields = ['name', 'report_type', 'beginning_date', 'ending_date']
+    success_url = '/list_of_courses'
+    template_name = 'cource_form.html'
+
+class CourseDelete(DeleteView):
+    model = Course
+    template_name = 'confirm_delete.html'
+    success_url = '/list_of_courses'
 
 def index(request):
     return HttpResponse("Hello, world. Novikov <3.")

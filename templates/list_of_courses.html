@@ -5,7 +5,8 @@
     {% csrf_token %}
     {% for c in courses %}
     <div>
-        {{ c.name }}
+		<a href="{{c.get_absolute_url}}">{{c.name}}</a>
     </div>
     {% endfor %}
+  <p><a href="{% url 'course_create' %}">создать курс</a></p>
 {% endblock %}

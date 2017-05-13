@@ -38,8 +38,11 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'^index/$', core_views.index, name='index'),
     url(r'^profile/$', core_views.profile_read, name='profile'),
-    url(r'^create_course/$', core_views.create_course, name='create_course'),
     url(r'^profile_edit/$', core_views.profile_edit, name='profile_edit'),
     url(r'^list_of_courses/$', core_views.view_courses, name='list_of_courses'),
+    url(r'^course/add/$', core_views.CourseCreate.as_view(), name='course_create'),
+    url(r'^course/(?P<pk>\d+)/$', core_views.CourseEdit.as_view(), name='course_view'),
+    url(r'^course/(?P<pk>\d+)/delete/$', core_views.CourseDelete.as_view(), name='course_delete'),
+
     url(r'^admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

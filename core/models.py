@@ -25,15 +25,15 @@ class Group(models.Model):
     starosta_id = models.OneToOneField(UserProfile)
     number = models.CharField(max_length=30)
     
-UserProfile.group = models.ForeignKey(Group, on_delete=models.CASCADE)
-
 class Course(models.Model):
-    name = models.CharField(max_length=254)
+    name = models.TextField()
     report_type = models.CharField(max_length=254)
     beginning_date = models.DateField()
     ending_date = models.DateField()
     users = models.ManyToManyField(UserProfile)
     groups = models.ManyToManyField(Group)
+    def get_absolute_url(self):
+        return "/course/%i/" % self.id
 
 class Subject(models.Model):
     name = models.CharField(max_length=254)

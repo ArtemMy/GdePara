@@ -1,0 +1,18 @@
+{% block body_content %}
+<table border="1">
+<tr>
+  <td>{{ object.name }}</td>
+</tr>
+</table>
+</p>
+<form action="" method="post">
+{% csrf_token %}
+<button type="button" class="btn btn-xl" onclick="javascript:history.go(-1);">Отмена</button> 
+<input type="hidden"
+       name="after"
+       value="{{ object.name }}" />
+<input type="submit"
+       value="Точно удалить"
+       name="DeleteAndReturnToList" />
+</form>
+{% endblock %} 
