@@ -3,7 +3,6 @@ from django.utils import timezone
 from registration.forms import RegistrationFormUniqueEmail
 from core.models import UserProfile, Course
 from django.forms import ModelForm
-from datetimewidget.widgets import DateWidget
 
 class UserProfileForm(ModelForm):
     def __init__(self, *args, **kwargs):
