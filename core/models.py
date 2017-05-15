@@ -85,6 +85,11 @@ class CourseMaterial(models.Model):
 
 # user_registered.connect(user_registered_callback)
 
+# @receiver(post_save, sender=Course)
+# def post_save_course_ds(sender,instance, **kwargs):
+#     if (use)
+#     instance.faculty
+
 class EmailBackend(object):
     def authenticate(self, username=None, password=None, **kwargs):
         logger.error('Something wrong in authentificate!')
