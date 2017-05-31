@@ -5,10 +5,11 @@
     {% csrf_token %}
     {% for c in groups %}
     <div>
-		<a href="{{c.get_absolute_url}}">{{c.name}}</a>
+		<a href="{{c.get_absolute_url}}">{{c.number}}</a>
     </div>
     {% endfor %}
-  {% if user.group_id != 'NULL' %}
+  {% if not user.group_key %}
     <p><a href="{% url 'group_create' %}">создать группу</a></p>
   {% endif %}
+  <button type="button" class="btn btn-xl" onclick="javascript:history.go(-1);">Назад</button>
 {% endblock %}

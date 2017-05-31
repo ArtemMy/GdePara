@@ -2,12 +2,25 @@
 
 {% block content %}
   <h2>Profile</h2>
-	{% csrf_token %}
+	
+    <form method="post">
+    {% csrf_token %}
 	{% if user.is_lecturer == True %}<p>Преподаватель</p> {% else %} <p>Студент</p>{% endif %}
 		<p>Email: {{user.email}}</p>
 		<p>Имя: {{user.first_name}} {{user.middle_name}} {{user.last_name}}</p>
 		<p>Номер: {{user.phone_number}}</p>
+    {% if user.group_key.starosta_id.id == user.id %}
+        <p>Группа: {{user.group_key.number}} (Староста)</p>
+    {% else %}
+        <p>Группа: {{user.group_key.number}}</p>
+    {% endif %}
 	<button type="button" onclick="location.href='{% url 'profile_edit' %}'">Редактировать</button>
 	<button type="button">Присоединиться к курсу</button>
-	<button type="button" onclick="location.href='{% url 'list_of_groups' %}'">Присоединиться к группе</button>
+	<button type="button" onclick="location.href='{% url 'list_of_groups' %}'">Список групп</button>
+    {% if user.group_key %}
+        
+        <button type="submit">Покинуть группу</button>
+        
+    {% endif %}
+  </form>
 {% endblock %}

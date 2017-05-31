@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Группа {{group.number}}</h2>
+  <form method="post">
+    {% csrf_token %}
+    <p>Список группы:</p>
+    {% for c in group_list %}
+    <div>
+      <p>{{c.first_name}}
+      {{c.middle_name}}
+      {{c.last_name}}</p>
+    </div>
+    {% endfor %}
+
+  {% if not user.group_key %}
+    <button type="submit">Присоединиться к группе</button>
+  {% endif %}
+  <button type="button" class="btn btn-xl" onclick="javascript:history.go(-1);">Назад</button>
+  </form>
+{% endblock %}

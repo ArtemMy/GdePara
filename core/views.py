@@ -15,16 +15,22 @@ from django.dispatch import receiver
 
 def profile_read(request):
     profile = UserProfile.objects.get(user=request.user)
-    if request.user.is_authenticated():
-#        return render_to_response('profile_read.html', RequestContext(request, {'user': profile}))
-        return render(request, 'profile_read.html', {'user': profile})
-    else:
+
+    if request.user.is_authenticated() == False:
         return render(request, 'index.html')
+
+    if request.method == 'POST':
+        profile.group_key = None
+        profile.save()
+        return HttpResponseRedirect('/profile')
+
+    return render(request, 'profile_read.html', {'user': profile},  RequestContext(request))
 
 def profile_edit(request):
     if request.user.is_authenticated() == False:
         return render(request, 'index.html')
     if request.method == 'POST':
+
         profile = UserProfile.objects.get(user=request.user)
         profile.is_lecturer = bool(request.POST.get("is_lecturer", False))
         profile.first_name = request.POST["first_name"]
@@ -114,7 +120,7 @@ def group_create(request):
         profile = UserProfile.objects.get(user=request.user)
         group = Group(starosta_id=profile, number=number)
         group.save()
-        profile.group_id = group.id
+        profile.group_key = group
         profile.save()
         return HttpResponseRedirect('/list_of_groups')
 
@@ -127,8 +133,25 @@ def view_courses(request):
     return render(request, 'list_of_courses.html', {'courses': courses})
 
 def view_groups(request):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
     groups = Group.objects.all()
-    return render(request, 'list_of_groups.html', {'groups': groups})
+    user = UserProfile.objects.get(user=request.user)
+    return render(request, 'list_of_groups.html', {'groups': groups, 'user': user})
+
+def view_group_information(request, pk):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
+    user = UserProfile.objects.get(user=request.user)
+    group = Group.objects.get(id=pk)
+    group_list = UserProfile.objects.filter(group_key=group).all()
+
+    if request.method == 'POST':
+        user.group_key = group
+        user.save()
+        return HttpResponseRedirect('/profile')
+
+    return render(request, 'group_info.html', {'pk': pk, 'group': group, 'group_list': group_list, 'user': user})
 
 class CourseCreate(CreateView):
     fields = ('name', 'report_type', 'beginning_date', 'ending_date')

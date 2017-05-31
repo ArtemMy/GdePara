@@ -20,11 +20,13 @@ class UserProfile(models.Model):
     email = models.CharField(max_length=30)
     degree = models.CharField(max_length=30)
     is_lecturer = models.BooleanField()
-    #group_key = models.ForeignKey('Group', null=True)
+    group_key = models.ForeignKey('Group', null=True)
 
 class Group(models.Model):
     starosta_id = models.OneToOneField(UserProfile, null=True)
     number = models.CharField(max_length=30)
+    def get_absolute_url(self):
+        return "/group/%i/" % self.id
 
 class Course(models.Model):
     name = models.TextField()
