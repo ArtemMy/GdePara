@@ -14,6 +14,7 @@ class UserProfileForm(ModelForm):
         self.fields['last_name'].required = False
         self.fields['phone_number'].required = False
         self.fields['degree'].required = False
+        #self.fields['group_key'].required = False
     class Meta:
         model = UserProfile
         fields = ['email', 'is_lecturer', 'first_name', 'middle_name', 'last_name', 'phone_number', 'degree']
@@ -36,6 +37,9 @@ class ProfileForm(forms.Form):
     name = forms.CharField(max_length=150)
     def __str__(self):
         return self.title
+
+class GroupForm(forms.Form):
+    number = forms.CharField(max_length=150)
 
 class CourseEditForm(ModelForm):
     class Meta:

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>List of Groups</h2>
+    {% csrf_token %}
+    {% for c in groups %}
+    <div>
+		<a href="{{c.get_absolute_url}}">{{c.name}}</a>
+    </div>
+    {% endfor %}
+  {% if user.group_id != 'NULL' %}
+    <p><a href="{% url 'group_create' %}">создать группу</a></p>
+  {% endif %}
+{% endblock %}

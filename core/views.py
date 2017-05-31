@@ -79,10 +79,10 @@ def SignupView(request):
             profile.degree = request.POST.get("degree", "")
             profile.save()
 
-            group = Group(number = "100/1")
-            group.starosta_id = profile
+            #group = Group(number = "100/1")
+            #group.starosta_id = profile
 
-            group.save()
+            #group.save()
 
             form = ProfileRegistrationForm()
             login(request, user)
@@ -106,9 +106,29 @@ def create_course(request):
         form = CreateCourseForm()
     return render(request, 'create_course.html', {'form': form})
 
+def group_create(request):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
+    if request.method == 'POST':
+        number = request.POST.get('number', '')
+        profile = UserProfile.objects.get(user=request.user)
+        group = Group(starosta_id=profile, number=number)
+        group.save()
+        profile.group_id = group.id
+        profile.save()
+        return HttpResponseRedirect('/list_of_groups')
+
+    profile = UserProfile.objects.get(user=request.user)
+    form = GroupForm()
+    return render(request, 'group_form.html', {'form': form})
+
 def view_courses(request):
     courses = Course.objects.all()
     return render(request, 'list_of_courses.html', {'courses': courses})
+
+def view_groups(request):
+    groups = Group.objects.all()
+    return render(request, 'list_of_groups.html', {'groups': groups})
 
 class CourseCreate(CreateView):
     fields = ('name', 'report_type', 'beginning_date', 'ending_date')
