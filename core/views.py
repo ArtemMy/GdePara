@@ -66,8 +66,9 @@ def SignupView(request):
     if request.method == 'POST':
         email = request.POST['email']
         UserModel = get_user_model()
+        first_name = request.POST["first_name"]
         try:
-            user = User(username=email,email=email)
+            user = User(username=email,email=email,first_name=first_name)
             user.set_password(request.POST['password'])
             user.save()
 #            user = UserModel.objects.get(username=email)

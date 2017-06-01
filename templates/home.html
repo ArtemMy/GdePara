@@ -4,15 +4,12 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-      Привет {{ user.username }}!
-      <a href="{% url 'profile' %}">просмотр профиля</a>
-      <a href="{% url 'list_of_courses' %}">просмотр списка курсов</a>
-      <a href="{% url 'auth_logout' %}">выход</a>
+      <h2> Привет, {{ user.first_name }}! </h2><br>
+      <a class="btn btn-primary" href="{% url 'profile' %}" role=button>Просмотр профиля</a>
+      <a class="btn btn-primary" href="{% url 'list_of_courses' %}" role=button>Просмотр списка курсов</a>
+      <a class="btn btn-primary" href="{% url 'auth_logout' %}" role=button>Выход</a>
     {% else %}
-      <a href="{% url 'auth_login' %}">вход</a>
-      <a href="{% url 'registration_register' %}">зарегистрироваться</a>
+      <a class="btn btn-default" href="{% url 'auth_login' %}" role=button>Войти</a>
+      <a class="btn btn-default" href="{% url 'registration_register' %}" role=button>Зарегистрироваться</a>
     {% endif %}
-  <h2>Это - главная</h2>
-	{% load static %}
-	<img src="{% static "tTCXD7y1FFA.jpg" %}" alt="Это - Ваня"/>
 {% endblock %}

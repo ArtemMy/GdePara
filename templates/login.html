@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Вход в систему{% endblock %}
 
 {% block content %}
-  <h2>Login</h2>
+  <h2>Введите учетные данные</h2>
   <form method="post">
 	{% if error %}<p><strong>Неверный логин или пароль</strong></p>{% endif %}
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Login</button>
-	<button type="button" class="btn btn-xl" onclick="javascript:history.go(-1);">Отмена</button> 
+    <button type="submit">Войти</button>
+	<button type="button" onclick="javascript:history.go(-1);">Отмена</button> 
   </form>
 {% endblock %}
