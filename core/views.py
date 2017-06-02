@@ -18,9 +18,23 @@ from dal import autocomplete
 class GroupAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = ModelGroup.objects.all()
-        # if self.q:
-        #     qs = qs.filter(name__istartswith=self.q)
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
         return qs
+
+def profile_read(request):
+    profile = UserProfile.objects.get(user=request.user)
+    print(len(ModelGroup.objects.all()))
+
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
+
+    if request.method == 'POST':
+        profile.group_key = None
+        profile.save()
+        return HttpResponseRedirect('/profile')
+
+    return render(request, 'profile_read.html', {'user': profile},  RequestContext(request))
 
 def profile_read(request):
     profile = UserProfile.objects.get(user=request.user)
