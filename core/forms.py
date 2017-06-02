@@ -20,18 +20,18 @@ class UserProfileForm(ModelForm):
         fields = ['email', 'is_lecturer', 'first_name', 'middle_name', 'last_name', 'phone_number', 'degree']
 
 class ProfileRegistrationForm(forms.Form):
-    email = forms.CharField(max_length=30)
-    password = forms.CharField(max_length=30)
-    is_lecturer = forms.BooleanField(label = "Are you lecturer?:", initial=True, required=False)
-    first_name = forms.CharField(max_length=30)
-    middle_name = forms.CharField(max_length=30, required=False)
-    last_name = forms.CharField(max_length=30)
-    phone_number = forms.CharField(max_length=30,  required=False)
-    degree = forms.CharField(max_length=30,  required=False)
+	last_name = forms.CharField(label = "Фамилия (*)", max_length=30)
+	first_name = forms.CharField(label = "Имя (*)",max_length=30)
+	middle_name = forms.CharField(label = "Отчество ",max_length=30, required=False)
+	phone_number = forms.CharField(label = "Телефон ",max_length=30,  required=False)
+	email = forms.CharField(label = "Почта (*)",max_length=30)
+	password = forms.CharField(label = "Пароль (*)",max_length=30)
+	is_lecturer = forms.BooleanField(label = "Преподаватель? ", initial=True, required=False)
+	degree = forms.CharField(label = "Степень ",max_length=30,  required=False)
 
 class LoginForm(forms.Form):
-    email = forms.CharField(max_length=30)
-    password = forms.CharField(max_length=30)
+    email = forms.CharField(label = "Почта (*)", max_length=30)
+    password = forms.CharField(label = "Пароль (*)", max_length=30)
 
 class ProfileForm(forms.Form):
     name = forms.CharField(max_length=150)
