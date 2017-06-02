@@ -3,10 +3,28 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+    <div class="form-group">
+      <div class="container">
+      <div class="row">
+        <!-- Форма Bootstrap, содержащая элемент для поиска по сайту -->
+        <form role="search">
+          <div class="input-group">
+      	    <input type="text" class="form-control" placeholder="Введите текст для поиска">
+        	  <span class="input-group-btn">
+        	    <button class="btn btn-info" type="button">
+    	      	  <i class="glyphicon glyphicon-search"></i>
+        	    </button>
+    	      </span>
+          </div>
+        </form><!-- Конец формы -->
+      </div>
+      </div>
+    </div>
+
   {% if user.is_authenticated %}
       <h2> Привет, {{ user.first_name }}! </h2><br>
-      <a class="btn btn-primary" href="{% url 'profile' %}" role=button>Просмотр профиля</a>
-      <a class="btn btn-primary" href="{% url 'auth_logout' %}" role=button>Выход</a>
+      <a class="btn btn-success" href="{% url 'profile' %}" role=button>Просмотр профиля</a>
+      <a class="btn btn-success" href="{% url 'auth_logout' %}" role=button>Выход</a>
     {% else %}
       <a class="btn btn-success" href="{% url 'auth_login' %}" role=button>Войти</a>
       <a class="btn btn-success" href="{% url 'registration_register' %}" role=button>Зарегистрироваться</a>

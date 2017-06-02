@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Profile</h2>
+  <h2>Мой профиль</h2>
 	{% if user.is_lecturer == True %}<p>Преподаватель</p> {% else %} <p>Студент</p>{% endif %}
 		<p>Email: {{user.email}}</p>
 		<p>Имя: {{user.first_name}} {{user.middle_name}} {{user.last_name}}</p>
-		<p>Номер: {{user.phone_number}}</p>
+		<p>Телефон: {{user.phone_number}}</p>
     {% if user.group_key.starosta_id.id == user.id %}
         <p>Группа:
         <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}} (Староста)</a>
@@ -15,7 +15,8 @@
         <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}}</a>
         </p>
     {% endif %}
-	<button type="button" onclick="location.href='{% url 'profile_edit' %}'">Редактировать</button>
-	<button type="button" onclick="location.href='{% url 'my_courses' %}'">Мои Курсы</button>
-	<button type="button" onclick="location.href='{% url 'list_of_groups' %}'">Список групп</button>
+	<a class="btn btn-success" onclick="location.href='{% url 'profile_edit' %}'">Редактировать</a>
+	<a class="btn btn-success" onclick="location.href='{% url 'my_courses' %}'">Мои курсы</a>
+	<a class="btn btn-success" onclick="location.href='{% url 'list_of_groups' %}'">Список групп</a>
+	
 {% endblock %}

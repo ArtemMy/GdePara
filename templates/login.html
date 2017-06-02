@@ -8,7 +8,8 @@
 	{% if error %}<p><strong>Неверный логин или пароль</strong></p>{% endif %}
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Войти</button>
-	<button type="button" onclick="javascript:history.go(-1);">Отмена</button> 
+	<button class="btn btn-info" type="submit">Войти</button>
+    
+	<button class="btn btn-info" type="button" onclick="javascript:history.go(-1);">Отмена</button> 
   </form>
 {% endblock %}
