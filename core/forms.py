@@ -9,17 +9,24 @@ from django.forms import ModelForm
 class UserProfileForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
-        self.fields['email'].required = True    
+        self.fields['email'].required = True   
+        self.fields['email'].label = "Почта"        
         self.fields['is_lecturer'].required = False
+        self.fields['is_lecturer'].label = "Преподаватель?"
         self.fields['first_name'].required = False
+        self.fields['first_name'].label = "Имя"
         self.fields['middle_name'].required = False
+        self.fields['middle_name'].label = "Отчество"
         self.fields['last_name'].required = False
+        self.fields['last_name'].label = "Фамилия"
         self.fields['phone_number'].required = False
+        self.fields['phone_number'].label = "Телефон"
         self.fields['degree'].required = False
+        self.fields['degree'].label = "Степень"
         #self.fields['group_key'].required = False
     class Meta:
         model = UserProfile
-        fields = ['email', 'is_lecturer', 'first_name', 'middle_name', 'last_name', 'phone_number', 'degree']
+        fields = ['email', 'is_lecturer', 'last_name', 'first_name', 'middle_name', 'phone_number', 'degree']
 
 class ProfileRegistrationForm(forms.Form):
 	last_name = forms.CharField(label = "Фамилия (*)", max_length=30)

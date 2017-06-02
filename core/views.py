@@ -198,7 +198,9 @@ def view_my_courses(request):
         return render(request, 'index.html')
 
     user = UserProfile.objects.get(user=request.user)
-    user_courses = Course.objects.filter(users=user)
+    user_courses = Course.objects.filter(users_allowed=user)
+    if user.is_lecturer:
+        user_courses += Course.objects.filter(groups_allowed=user.group_key)
 
     if request.method == 'POST':
         for c in user_courses:
@@ -206,9 +208,7 @@ def view_my_courses(request):
                 c.users.remove(user)
                 c.save()
 
-    user_courses = Course.objects.filter(users=user)
     return render(request, 'my_courses.html', {'courses': user_courses})
-
 
 class CourseCreate(CreateView):
     fields = ('name', 'report_type', 'beginning_date', 'ending_date')

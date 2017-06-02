@@ -3,7 +3,7 @@
 {% block content %}
   <h2>Мой профиль</h2>
 	{% if user.is_lecturer == True %}<p>Преподаватель</p> {% else %} <p>Студент</p>{% endif %}
-		<p>Email: {{user.email}}</p>
+		<p>Почта: {{user.email}}</p>
 		<p>Имя: {{user.first_name}} {{user.middle_name}} {{user.last_name}}</p>
 		<p>Телефон: {{user.phone_number}}</p>
     {% if user.group_key.starosta_id.id == user.id %}

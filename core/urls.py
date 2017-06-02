@@ -24,6 +24,7 @@ from core.forms import ProfileRegistrationForm, LoginForm
 from registration.backends.default.views import RegistrationView
 from core.views import LoginView, SignupView
 #from registration.backends.default.urls import url, include
+from core.scrape_poly_t import setup
 
 urlpatterns = [
     url(r'accounts/register/$', 
@@ -53,3 +54,5 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+setup()
