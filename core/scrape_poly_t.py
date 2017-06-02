@@ -19,6 +19,7 @@ def get_schedule(teachers, id, gr, courses, class_f):
 					teach = teachers[int(lesson["teachers"][0].get("id"))]
 				else:
 					teach = None
+				print("here")
 				course = next((c for c in courses if c.name == lesson["subject"] and c.teacher == teach), None)
 
 				if(not course):
@@ -77,7 +78,7 @@ def update_tt():
 	grs = list()
 	with urllib.request.urlopen("http://ruz2.spbstu.ru/api/v1/ruz/faculties/") as url:
 		data = json.loads(url.read().decode())
-		for fac in data["faculties"][7:7]:
+		for fac in data["faculties"][7:8]:
 			print("{} out of {} facs".format(data["faculties"].index(fac), len(data["faculties"])))
 			print(fac)
 			sch_grs = [x for x in get_grs(fac, grs)]
@@ -86,7 +87,9 @@ def update_tt():
 				get_schedule(teachers, id, gr, courses, class_f)
 
 	ModelTeacher.objects.bulk_create(teachers.values())
+	print(len(courses))
 	ModelCourse.objects.bulk_create(list(courses))
+	print(len(ModelCourse.objects.all()))
 	ModelClassFormat.objects.bulk_create(class_f)
 	ModelGroup.objects.bulk_create(grs)
 

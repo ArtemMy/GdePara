@@ -45,8 +45,6 @@ class ModelClassFormat(models.Model):
     week_number = models.IntegerField()
     course = models.ForeignKey(ModelCourse, on_delete=models.CASCADE)
 
-
-
 class UserProfile(models.Model):
     user = models.ForeignKey('auth.User')
     first_name = models.CharField(max_length=30)
@@ -77,9 +75,10 @@ class Group(models.Model):
 class Course(models.Model):
     name = models.TextField()
     report_type = models.CharField(max_length=254)
+    teacher_name = models.CharField(max_length=254)
     beginning_date = models.DateField()
     ending_date = models.DateField()
-    subject = models.ForeignKey(ModelTeacher)
+    subject = models.ForeignKey(Subject)
     model_groups = models.ManyToManyField(ModelGroup)
     groups_allowed = models.ManyToManyField(Group)
     users_allowed = models.ManyToManyField(UserProfile)
