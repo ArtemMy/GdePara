@@ -15,6 +15,26 @@ from django.dispatch import receiver
 import random, string
 from dal import autocomplete
 
+class GroupAutoCompleteView(ModelGroup):
+	def get(self,request,*args,**kwargs):
+		data = request.GET
+		number = data.get("term")
+		if number:
+			groups = ModelGroup.objects.filter(number__icontains= number)
+		else:
+			groups = ModelGroup.objects.all()
+			results = []
+		for group in groups:
+			group_json = {}
+			group_json['id'] = group.id
+			group_json['label'] = group.number
+			group_json['value'] = group.number
+			results.append(group_json)
+			data = json.dumps(results)
+			mimetype = 'application/json'
+		return HttpResponse(data, mimetype)
+
+
 class GroupAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = ModelGroup.objects.all()
