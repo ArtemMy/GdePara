@@ -8,6 +8,7 @@
 	{% if error %}<p><strong>Такой пользователь уже есть</strong></p>{% endif %}
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Зарегистрироваться</button>
+    <button class="btn btn-success" type="submit">Зарегистрироваться</button>
+	<button class="btn btn-success" type="button" onclick="javascript:history.go(-1);">Отмена</button>
   </form>
 {% endblock %}
