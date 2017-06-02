@@ -13,9 +13,18 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.dispatch import receiver
 import random, string
+from dal import autocomplete
+
+class GroupAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = ModelGroup.objects.all()
+        # if self.q:
+        #     qs = qs.filter(name__istartswith=self.q)
+        return qs
 
 def profile_read(request):
     profile = UserProfile.objects.get(user=request.user)
+    print(len(ModelGroup.objects.all()))
 
     if request.user.is_authenticated() == False:
         return render(request, 'index.html')
@@ -100,12 +109,14 @@ def SignupView(request):
     return render(request, 'signup.html', {'form': form})
 
 def create_course(request):
-    print("create_course")
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
     if request.method == 'POST':
         print("create_course post")
         name = request.POST.get('name', '')
         report_type = request.POST.get('report_type', '')
         beginning_date = request.POST.get('beginning_date', '')
+        ending_date = request.POST.get('ending_date', '')
         ending_date = request.POST.get('ending_date', '')
         new_subj = Subject(name=name)
         new_course = Course(name=name, subject=new_subj, report_type=report_type, beginning_date=beginning_date, ending_date=ending_date)
@@ -134,7 +145,7 @@ def group_create(request):
 def view_courses(request):
     if request.user.is_authenticated() == False:
         return render(request, 'index.html')
-    courses = Course.objects.all()
+    courses = ModelCourse.objects.all()
     user = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':

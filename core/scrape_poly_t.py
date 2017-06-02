@@ -20,25 +20,25 @@ def get_schedule(teachers, id, gr, courses, class_f):
 					teach = teachers[int(lesson["teachers"][0].get("id"))]
 				else:
 					teach = None
-				print("here", lesson["teachers"][0].get("id"))
 				course = next((c for c in courses if c.name == lesson["subject"] and c.teacher == teach), None)
 
 				if(not course):
 					course = ModelCourse(name=lesson["subject"], teacher=teach)
-					courses.add(course)
+					courses.append(course)
 
-				class_f.append(ModelClassFormat(day_of_week=day.get("weekday"), \
+				new_class = ModelClassFormat(day_of_week=day.get("weekday"), \
 					time_of_beginning=lesson.get("time_start"), \
 					time_of_ending=lesson.get("time_end"), \
 					course=course \
-					))
-
+					)
 				if(lesson.get("typeObj")):
-					type_of_class=lesson.get("typeObj").get("name")
+					new_class.type_of_class=lesson.get("typeObj").get("name")
 				if(day.get("auditories")):
-					class_f.buildauditoriuming = day.get("auditories").get("name")
+					new_class.buildauditoriuming = day.get("auditories").get("name")
 					if(day.get("auditories").get("building")):
-						class_f.building = day.get("auditories").get("building").get("name")
+						new_class.building = day.get("auditories").get("building").get("name")
+				new_class.week_number = data.get("week").get("is_odd")
+				class_f.append(new_class)
 
 @transaction.atomic
 def get_tea():
@@ -74,7 +74,7 @@ def update_tt():
 
 	teachers = get_tea()
 	print("{} teachers".format(len(teachers)))
-	courses = set()
+	courses = list()
 	class_f = list()
 	grs = list()
 	with urllib.request.urlopen("http://ruz2.spbstu.ru/api/v1/ruz/faculties/") as url:

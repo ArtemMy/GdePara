@@ -3,8 +3,20 @@
 from django import forms
 from django.utils import timezone
 from registration.forms import RegistrationFormUniqueEmail
-from core.models import UserProfile, Course
+from core.models import UserProfile, Course, Group
 from django.forms import ModelForm
+from dal import autocomplete
+
+
+class SearchForm(forms.ModelForm):
+    birth_country = forms.ModelChoiceField(
+        queryset=Group.objects.all(),
+        widget=autocomplete.ModelSelect2(url='country-autocomplete')
+    )
+
+    class Meta:
+        model = Group
+        fields = ('__all__')
 
 class UserProfileForm(ModelForm):
     def __init__(self, *args, **kwargs):

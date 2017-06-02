@@ -43,7 +43,7 @@ class ModelClassFormat(models.Model):
     building = models.CharField(max_length=30)
     auditorium = models.CharField(max_length=30)
     week_number = models.IntegerField()
-    course = models.ForeignKey(ModelCourse, on_delete=models.CASCADE)
+    course = models.ForeignKey(ModelCourse, on_delete=models.CASCADE, null=True)
 
 class UserProfile(models.Model):
     user = models.ForeignKey('auth.User')
