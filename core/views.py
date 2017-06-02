@@ -199,9 +199,9 @@ def view_my_courses(request):
         return render(request, 'index.html')
 
     user = UserProfile.objects.get(user=request.user)
-    user_courses = Course.objects.filter(users_allowed=user)
+    user_courses = list(Course.objects.filter(users_allowed=user))
     if user.is_lecturer:
-        user_courses += Course.objects.filter(groups_allowed=user.group_key)
+        user_courses += list(Course.objects.filter(groups_allowed=user.group_key))
 
     if request.method == 'POST':
         for c in user_courses:
