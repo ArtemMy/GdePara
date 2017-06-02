@@ -8,7 +8,7 @@
       <a class="btn btn-primary" href="{% url 'profile' %}" role=button>Просмотр профиля</a>
       <a class="btn btn-primary" href="{% url 'auth_logout' %}" role=button>Выход</a>
     {% else %}
-      <a class="btn btn-default" href="{% url 'auth_login' %}" role=button>Войти</a>
-      <a class="btn btn-default" href="{% url 'registration_register' %}" role=button>Зарегистрироваться</a>
+      <a class="btn btn-success" href="{% url 'auth_login' %}" role=button>Войти</a>
+      <a class="btn btn-success" href="{% url 'registration_register' %}" role=button>Зарегистрироваться</a>
     {% endif %}
 {% endblock %}
