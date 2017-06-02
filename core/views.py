@@ -108,6 +108,7 @@ def create_course(request):
         beginning_date = request.POST.get('beginning_date', '')
         ending_date = request.POST.get('ending_date', '')
         new_subj = Subject(name=name)
+        new_subj.save()
         new_course = Course(name=name, subject=new_subj, report_type=report_type, beginning_date=beginning_date, ending_date=ending_date)
         new_course.save()
         return redirect('list_of_courses')
