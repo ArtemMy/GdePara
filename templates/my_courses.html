@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Мои курсы</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for c in courses %}
+    <div>
+		<p>{{c.name}}, Дата начала: {{c.beginning_date}}, Дата окончания: {{c.ending_date}}, Тип отчетности: {{c.report_type}}
+		<input type="submit" id="buttonId" name="{{c.name}}" value="Удалить курс">
+		</p>
+    </div>
+    {% endfor %}
+    <a href="/list_of_courses/">Список курсов</a>
+    <button type="button" onclick="location.href='{% url 'profile' %}'">Назад</button>
+  </form>
+{% endblock %}

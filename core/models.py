@@ -71,6 +71,8 @@ class Group(models.Model):
     spec = models.CharField(max_length=120)
     def get_absolute_url(self):
         return "/group/%i/" % self.id
+    def get_safety_code_url(self):
+        return "/group/%i/safety_code/" % self.id
 
 class Course(models.Model):
     name = models.TextField()
@@ -114,8 +116,8 @@ class ClassMaterial(models.Model):
     text = models.TextField()
     class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
 
-
-#####################################
+class SecretCode(models.Model):
+    code = models.CharField(max_length=8)
 
 # def user_registered_callback(sender, user, request, **kwargs):
 #     profile = UserProfile(user = user)

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Profile</h2>
+  <h2>Изменить информацию профиля</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save</button>
-	<button type="button" class="btn btn-xl" onclick="javascript:history.go(-1);">Отмена</button> 
+	<a class="btn btn-success" type="submit">Сохранить</a>
+	<a class="btn btn-success" type="button" class="btn btn-xl" onclick="javascript:history.go(-1);">Отмена</a>
 </form>
 {% endblock %}

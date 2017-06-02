@@ -12,6 +12,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.dispatch import receiver
+import random, string
 
 def profile_read(request):
     profile = UserProfile.objects.get(user=request.user)
@@ -130,8 +131,18 @@ def group_create(request):
     return render(request, 'group_form.html', {'form': form})
 
 def view_courses(request):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
     courses = Course.objects.all()
-    return render(request, 'list_of_courses.html', {'courses': courses})
+    user = UserProfile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        for c in courses:
+            if request.POST.get(c.name):
+                c.users.add(user)
+                c.save()
+
+    return render(request, 'list_of_courses.html', {'courses': courses, 'user': user})
 
 def view_groups(request):
     if request.user.is_authenticated() == False:
@@ -148,11 +159,56 @@ def view_group_information(request, pk):
     group_list = UserProfile.objects.filter(group_key=group).all()
 
     if request.method == 'POST':
+        if request.POST.get('generate_code'):
+            new_code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+            secret_code = SecretCode(code=new_code)
+            secret_code.save()
+            return render(request, 'group_info.html', {'pk': pk, 'group': group, 'group_list': group_list, 'user': user, 'code': new_code})
+
+        user.group_key = None
+        user.save()
+        return HttpResponseRedirect('/profile')
+
+
+    return render(request, 'group_info.html', {'pk': pk, 'group': group, 'group_list': group_list, 'user': user})
+
+def view_safety_code(request, pk):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
+
+    if request.method == 'POST':
+        code = request.POST.get('code', '')
+        try:
+            get_code = SecretCode.objects.get(code=code)
+        except SecretCode.DoesNotExist:
+            form = SafetyCodeForm()
+            return render(request, 'safety_code.html', {'form': form, 'wrong': True})
+        get_code.delete()
+        user = UserProfile.objects.get(user=request.user)
+        group = Group.objects.get(id=pk)
         user.group_key = group
         user.save()
         return HttpResponseRedirect('/profile')
 
-    return render(request, 'group_info.html', {'pk': pk, 'group': group, 'group_list': group_list, 'user': user})
+    form = SafetyCodeForm()
+    return render(request, 'safety_code.html', {'form': form})
+
+def view_my_courses(request):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
+
+    user = UserProfile.objects.get(user=request.user)
+    user_courses = Course.objects.filter(users=user)
+
+    if request.method == 'POST':
+        for c in user_courses:
+            if request.POST.get(c.name):
+                c.users.remove(user)
+                c.save()
+
+    user_courses = Course.objects.filter(users=user)
+    return render(request, 'my_courses.html', {'courses': user_courses})
+
 
 class CourseCreate(CreateView):
     fields = ('name', 'report_type', 'beginning_date', 'ending_date')

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    {% if wrong %}
+    <p>Неверный код!!!</p>
+    {% endif %}
+    {{ form.as_p }}
+    <input type="submit" value="Ввести">
+  <button type="button" class="btn btn-xl" onclick="javascript:history.go(-1);">Назад</button>
+  </form>
+{% endblock %}
