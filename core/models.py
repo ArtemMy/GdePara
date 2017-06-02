@@ -27,6 +27,8 @@ class Group(models.Model):
     number = models.CharField(max_length=30)
     def get_absolute_url(self):
         return "/group/%i/" % self.id
+    def get_safety_code_url(self):
+        return "/group/%i/safety_code/" % self.id
 
 class Course(models.Model):
     name = models.TextField()
@@ -66,6 +68,9 @@ class ClassFormat(models.Model):
 class CourseMaterial(models.Model):
     text = models.TextField()
     courses = models.ManyToManyField(Course)
+
+class SecretCode(models.Model):
+    code = models.CharField(max_length=8)
 
 ######################################
 

@@ -12,6 +12,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.dispatch import receiver
+import random, string
 
 def profile_read(request):
     profile = UserProfile.objects.get(user=request.user)
@@ -148,11 +149,40 @@ def view_group_information(request, pk):
     group_list = UserProfile.objects.filter(group_key=group).all()
 
     if request.method == 'POST':
+        if request.POST.get('generate_code'):
+            print("test")
+            new_code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+            secret_code = SecretCode(code=new_code)
+            secret_code.save()
+            return render(request, 'group_info.html', {'pk': pk, 'group': group, 'group_list': group_list, 'user': user, 'code': new_code})
+
+        user.group_key = None
+        user.save()
+        return HttpResponseRedirect('/profile')
+
+
+    return render(request, 'group_info.html', {'pk': pk, 'group': group, 'group_list': group_list, 'user': user})
+
+def view_safety_code(request, pk):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
+
+    if request.method == 'POST':
+        code = request.POST.get('code', '')
+        try:
+            get_code = SecretCode.objects.get(code=code)
+        except SecretCode.DoesNotExist:
+            form = SafetyCodeForm()
+            return render(request, 'safety_code.html', {'form': form, 'wrong': True})
+        get_code.delete()
+        user = UserProfile.objects.get(user=request.user)
+        group = Group.objects.get(id=pk)
         user.group_key = group
         user.save()
         return HttpResponseRedirect('/profile')
 
-    return render(request, 'group_info.html', {'pk': pk, 'group': group, 'group_list': group_list, 'user': user})
+    form = SafetyCodeForm()
+    return render(request, 'safety_code.html', {'form': form})
 
 class CourseCreate(CreateView):
     fields = ('name', 'report_type', 'beginning_date', 'ending_date')

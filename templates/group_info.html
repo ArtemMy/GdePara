@@ -6,15 +6,33 @@
     {% csrf_token %}
     <p>Список группы:</p>
     {% for c in group_list %}
+    {% if c.id == group.starosta_id.id %}
+    <div>
+      <p>{{c.first_name}}
+      {{c.middle_name}}
+      {{c.last_name}} 
+      (Староста)</p>
+    </div>
+    {% else %}
     <div>
       <p>{{c.first_name}}
       {{c.middle_name}}
       {{c.last_name}}</p>
     </div>
+    {% endif %}
     {% endfor %}
 
+  {% if code %}
+  <p>Пригласительный код: {{code}}</p>
+  {% endif %}
+
+  {% if user.group_key == group %}
+    <button type="submit">Покинуть группу</button>
+    <input type="submit" id="buttonId" name="generate_code" value="Сгенерировать пригласительный код">
+  {% endif %}
+
   {% if not user.group_key %}
-    <button type="submit">Присоединиться к группе</button>
+    <a href="{{group.get_safety_code_url}}">Присоединиться к группе</a>
   {% endif %}
   <button type="button" class="btn btn-xl" onclick="javascript:history.go(-1);">Назад</button>
   </form>

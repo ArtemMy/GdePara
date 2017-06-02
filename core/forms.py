@@ -41,6 +41,9 @@ class ProfileForm(forms.Form):
 class GroupForm(forms.Form):
     number = forms.CharField(max_length=150)
 
+class SafetyCodeForm(forms.Form):
+    code = forms.CharField(max_length=8)
+
 class CourseEditForm(ModelForm):
     class Meta:
         model = Course

@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^list_of_groups/$', core_views.view_groups, name='list_of_groups'),
     url(r'^group/add/$', core_views.group_create, name='group_create'),
     url(r'^group/(?P<pk>\d+)/$', core_views.view_group_information, name='group_view'),
+    url(r'^group/(?P<pk>\d+)/safety_code/$', core_views.view_safety_code, name='safety_code'),
     #url(r'^group/(?P<pk>\d+)/delete/$', core_views.GroupDelete.as_view(), name='group_delete'),
     url(r'^course/add/$', core_views.CourseCreate.as_view(), name='course_create'),
     url(r'^course/(?P<pk>\d+)/$', core_views.CourseEdit.as_view(), name='course_view'),
