@@ -63,7 +63,7 @@ class UserProfile(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=254)
-    is_necessary = models.BooleanField()
+    is_necessary = models.BooleanField(default='True')
 
 class Group(models.Model):
     starosta_id = models.OneToOneField(UserProfile, null=True)

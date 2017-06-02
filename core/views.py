@@ -119,6 +119,7 @@ def create_course(request):
         ending_date = request.POST.get('ending_date', '')
         ending_date = request.POST.get('ending_date', '')
         new_subj = Subject(name=name)
+        new_subj.save()
         new_course = Course(name=name, subject=new_subj, report_type=report_type, beginning_date=beginning_date, ending_date=ending_date)
         new_course.save()
         return redirect('list_of_courses')
@@ -210,9 +211,9 @@ def view_my_courses(request):
         return render(request, 'index.html')
 
     user = UserProfile.objects.get(user=request.user)
-    user_courses = Course.objects.filter(users_allowed=user)
+    user_courses = list(Course.objects.filter(users_allowed=user))
     if user.is_lecturer:
-        user_courses += Course.objects.filter(groups_allowed=user.group_key)
+        user_courses += list(Course.objects.filter(groups_allowed=user.group_key))
 
     if request.method == 'POST':
         for c in user_courses:
