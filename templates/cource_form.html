@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% block content %}
 <head>
   <meta charset="utf-8">
@@ -10,10 +10,8 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $( function() {
-    $( "#id_beginning_date" ).datepicker({
-      dateFormat: "yy-mm-dd"
-          });
-    $( "#id_ending_date" ).datepicker({
+    $( "#beginning_date" ).datepicker();
+    $( "#datepicker" ).datepicker({
             dateFormat: "yy-mm-dd"
           });
   } );
@@ -22,10 +20,202 @@
 
 <form method="post">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Добавить">
+<p>Название курса:
+  <label for="textfield"></label>
+  {{form.name}}
+</p>
+<p>Дата начала курса:{{form.beginning_date}}</p>
+<p>Дата окончания курса:   {{form.ending_date}}></p>
+<p>Report:&nbsp;
+  <label for="textfield"></label>
+  {{form.report_type}}
+</p>
+
+<p>Преподаватель:&nbsp;
+  <label for="textfield"></label>
+  <input type="text" name="textfield2" id="textfield">
+</p>
+<input type="submit" value="Добавить" />
+</form>
+
+<p>Конспекты:</p>
+<p>Редактирование информации о текущем курсе</p>
+<p>{% csrf_token %}</p>
+<p>Конспекты:</p>
+<p><input type="submit" value="Добавить" /></p>
+<p>Учебные пособия:</p>
+<p><input type="submit" value="Добавить" /></p>
+<p>Успеваемость:</p>
+<p><input type="submit" value="Добавить" /></p>
+<table width="318" border="1">
+  <caption>
+    Формат занятий
+  </caption>
+  <tr>
+    <th width="143" scope="col">День недели</th>
+    <th width="9" scope="col">Время</th>
+    <th width="9" scope="col">Место</th>
+    <th width="129" scope="col">Отмена</th>
+  </tr>
+  <tr>
+    <td><form name="form2" method="post" action="">
+      <label for="select"></label>
+      <select name="select" size="1" id="select">
+        <option selected>Понедельник</option>
+        <option>Вторник</option>
+        <option>Среда</option>
+        <option>Четверг</option>
+        <option>Пятница</option>
+        <option>Суббота</option>
+        <option>Воскресенье </option>
+      </select>
+    </form></td>
+    <td><select name="select6" size="1" id="select6">
+      <option>08.00-10.00</option>
+      <option>10.00-12.00</option>
+      <option>12.00-14.00</option>
+      <option>14.00-16.00</option>
+      <option>16.00-18.00</option>
+      <option>18.00-20.00</option>
+      <option>20.00-22.00</option>
+    </select></td>
+    <td><select name="select11" size="1" id="select11">
+      <option>Ауд.1</option>
+      <option>Ауд.2</option>
+      <option>Ауд.3</option>
+      <option>Ауд.4</option>
+      <option>Ауд.5</option>
+      <option>Ауд.6</option>
+      <option>Ауд.7</option>
+    </select></td>
+    <td><form name="form1" method="post" action="">
+      <input type="submit" name="button" id="button" value="отмена">
+    </form></td>
+  </tr>
+  <tr>
+    <td><select name="select2" size="1" id="select2">
+      <option selected>Понедельник</option>
+      <option>Вторник</option>
+      <option>Среда</option>
+      <option>Четверг</option>
+      <option>Пятница</option>
+      <option>Суббота</option>
+      <option>Воскресенье </option>
+    </select></td>
+    <td><select name="select7" size="1" id="select7">
+      <option>08.00-10.00</option>
+      <option>10.00-12.00</option>
+      <option>12.00-14.00</option>
+      <option>14.00-16.00</option>
+      <option>16.00-18.00</option>
+      <option>18.00-20.00</option>
+      <option>20.00-22.00</option>
+    </select></td>
+    <td><select name="select12" size="1" id="select12">
+      <option>Ауд.1</option>
+      <option>Ауд.2</option>
+      <option>Ауд.3</option>
+      <option>Ауд.4</option>
+      <option>Ауд.5</option>
+      <option>Ауд.6</option>
+      <option>Ауд.7</option>
+    </select></td>
+    <td><input type="submit" name="button2" id="button2" value="отмена"></td>
+  </tr>
+  <tr>
+    <td><select name="select3" size="1" id="select3">
+      <option selected>Понедельник</option>
+      <option>Вторник</option>
+      <option>Среда</option>
+      <option>Четверг</option>
+      <option>Пятница</option>
+      <option>Суббота</option>
+      <option>Воскресенье </option>
+    </select></td>
+    <td><select name="select8" size="1" id="select8">
+      <option>08.00-10.00</option>
+      <option>10.00-12.00</option>
+      <option>12.00-14.00</option>
+      <option>14.00-16.00</option>
+      <option>16.00-18.00</option>
+      <option>18.00-20.00</option>
+      <option>20.00-22.00</option>
+    </select></td>
+    <td><select name="select13" size="1" id="select13">
+      <option>Ауд.1</option>
+      <option>Ауд.2</option>
+      <option>Ауд.3</option>
+      <option>Ауд.4</option>
+      <option>Ауд.5</option>
+      <option>Ауд.6</option>
+      <option>Ауд.7</option>
+    </select></td>
+    <td><input type="submit" name="button3" id="button3" value="отмена"></td>
+  </tr>
+  <tr>
+    <td><select name="select4" size="1" id="select4">
+      <option selected>Понедельник</option>
+      <option>Вторник</option>
+      <option>Среда</option>
+      <option>Четверг</option>
+      <option>Пятница</option>
+      <option>Суббота</option>
+      <option>Воскресенье </option>
+    </select></td>
+    <td><select name="select9" size="1" id="select9">
+      <option>08.00-10.00</option>
+      <option>10.00-12.00</option>
+      <option>12.00-14.00</option>
+      <option>14.00-16.00</option>
+      <option>16.00-18.00</option>
+      <option>18.00-20.00</option>
+      <option>20.00-22.00</option>
+    </select></td>
+    <td><select name="select14" size="1" id="select14">
+      <option>Ауд.1</option>
+      <option>Ауд.2</option>
+      <option>Ауд.3</option>
+      <option>Ауд.4</option>
+      <option>Ауд.5</option>
+      <option>Ауд.6</option>
+      <option>Ауд.7</option>
+    </select></td>
+    <td><input type="submit" name="button4" id="button4" value="отмена"></td>
+  </tr>
+  <tr>
+    <td><select name="select5" size="1" id="select5">
+      <option selected>Понедельник</option>
+      <option>Вторник</option>
+      <option>Среда</option>
+      <option>Четверг</option>
+      <option>Пятница</option>
+      <option>Суббота</option>
+      <option>Воскресенье </option>
+    </select></td>
+    <td><select name="select10" size="1" id="select10">
+      <option>08.00-10.00</option>
+      <option>10.00-12.00</option>
+      <option>12.00-14.00</option>
+      <option>14.00-16.00</option>
+      <option>16.00-18.00</option>
+      <option>18.00-20.00</option>
+      <option>20.00-22.00</option>
+    </select></td>
+    <td><select name="select15" size="1" id="select15">
+      <option>Ауд.1</option>
+      <option>Ауд.2</option>
+      <option>Ауд.3</option>
+      <option>Ауд.4</option>
+      <option>Ауд.5</option>
+      <option>Ауд.6</option>
+      <option>Ауд.7</option>
+    </select></td>
+    <td><input type="submit" name="button5" id="button5" value="отмена"></td>
+  </tr>
+</table>
+    <p><input type="submit" value="Сохранить"/> 
     <button type="button" class="btn btn-xl" onclick='location.href="{{request.path}}delete"'>Удалить курс</button> 
-    <button type="button" class="btn btn-xl" onclick="javascript:history.go(-1);">Отмена</button> 
+    <input type="submit" onclick="javascript:history.go(-1);" value="Отмена" /> </p>
 <!doctype html>
 <html lang="en">
 </html>

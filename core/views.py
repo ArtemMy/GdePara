@@ -100,19 +100,19 @@ def SignupView(request):
     return render(request, 'signup.html', {'form': form})
 
 def create_course(request):
+    print("create_course")
     if request.method == 'POST':
-        form = CreateCourseForm(request.POST)
-        if form.is_valid():
-            name = request.POST.get('name', '')
-            report_type = request.POST.get('report_type', '')
-            beginning_date = request.POST.get('beginning_date', '')
-            ending_date = request.POST.get('ending_date', '')
-            new_course = Course(name=name, report_type=report_type, beginning_date=beginning_date, ending_date=ending_date)
-            new_course.save()
-            return redirect('home')
+        print("create_course post")
+        name = request.POST.get('name', '')
+        report_type = request.POST.get('report_type', '')
+        beginning_date = request.POST.get('beginning_date', '')
+        ending_date = request.POST.get('ending_date', '')
+        new_course = Course(name=name, report_type=report_type, beginning_date=beginning_date, ending_date=ending_date)
+        new_course.save()
+        return redirect('list_of_courses')
     else:
-        form = CreateCourseForm()
-    return render(request, 'create_course.html', {'form': form})
+        form = CourseEditForm()
+    return render(request, 'cource_form.html', {'form': form})
 
 def group_create(request):
     if request.user.is_authenticated() == False:

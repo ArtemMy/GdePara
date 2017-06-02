@@ -28,6 +28,9 @@ class ProfileRegistrationForm(forms.Form):
 	phone_number = forms.CharField(label = "Телефон ",max_length=30,  required=False)
 	email = forms.CharField(label = "Почта (*)",max_length=30)
 	password = forms.CharField(label = "Пароль (*)",max_length=30)
+	####
+	confirm_password = forms.CharField(label = "Подтвердите пароль (*)",max_length=30)
+	####
 	is_lecturer = forms.BooleanField(label = "Преподаватель? ", initial=True, required=False)
 	degree = forms.CharField(label = "Степень ",max_length=30,  required=False)
 
@@ -48,8 +51,8 @@ class SafetyCodeForm(forms.Form):
 
 class CourseEditForm(ModelForm):
     class Meta:
-        model = Course
+        model = Course;
         fields = ['name', 'report_type', 'beginning_date', 'ending_date']
         widgets = {
-            'beginning_date': forms.DateInput(attrs={'class':'datepicker'}),
+            'beginning_date': forms.DateInput(attrs={'class':'datepicker', 'id':'beginning_date'}),
         }
