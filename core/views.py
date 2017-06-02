@@ -203,7 +203,6 @@ def view_my_courses(request):
     if request.method == 'POST':
         for c in user_courses:
             if request.POST.get(c.name):
-                print(user in c.users)
                 c.users.remove(user)
                 c.save()
 
