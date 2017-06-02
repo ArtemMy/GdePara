@@ -52,6 +52,7 @@ urlpatterns = [
     url(r'^course/(?P<pk>\d+)/delete/$', core_views.CourseDelete.as_view(), name='course_delete'),
     url(r'^course/my_courses/$', core_views.view_my_courses, name='my_courses'),
     url(r'^group-autocomplete/$', core_views.GroupAutocomplete.as_view(), name='group-autocomplete'),
+    url(r'^my-timetable/$', core_views.my_timetable, name='my-timetable'),
 
     url(r'^admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -22,6 +22,16 @@ class GroupAutocomplete(autocomplete.Select2QuerySetView):
             qs = qs.filter(name__istartswith=self.q)
         return qs
 
+def my_timetable(request):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
+    user = UserProfile.objects.get(user=request.user)
+    user_courses = list(Course.objects.filter(users_allowed=user))
+    if user.is_lecturer:    
+        user_courses += list(Course.objects.filter(groups_allowed=user.group_key))
+    user_courses = ModelCourse.objects.all()[:5]
+    return render(request, 'timetable.html', {'courses': user_courses},  RequestContext(request))
+
 def profile_read(request):
     profile = UserProfile.objects.get(user=request.user)
     print(len(ModelGroup.objects.all()))
@@ -117,7 +127,7 @@ def SignupView(request):
 
             form = ProfileRegistrationForm()
             login(request, user)
-            return HttpResponseRedirect('/home/')
+            return HttpResponseRedirect('/')
     else:
         form = ProfileRegistrationForm()
     return render(request, 'signup.html', {'form': form})
