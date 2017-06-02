@@ -20,6 +20,14 @@ class ModelTeacher(models.Model):
     def full_name(self):
         return self.first_name + " " + self.middle_name + " " + self.last_name
 
+class ModelGroup(models.Model):
+    number = models.CharField(max_length=30)
+    faculty = models.CharField(max_length=120)
+    faculty_abbr = models.CharField(max_length=30)
+    spec = models.CharField(max_length=120)
+    def get_absolute_url(self):
+        return "/group/%i/" % self.id
+
 class ModelCourse(models.Model):
     name = models.TextField()
     teacher = models.ForeignKey(ModelTeacher, null=True)
@@ -36,14 +44,6 @@ class ModelClassFormat(models.Model):
     auditorium = models.CharField(max_length=30)
     week_number = models.IntegerField()
     course = models.ForeignKey(ModelCourse, on_delete=models.CASCADE)
-
-class ModelGroup(models.Model):
-    number = models.CharField(max_length=30)
-    faculty = models.CharField(max_length=120)
-    faculty_abbr = models.CharField(max_length=30)
-    spec = models.CharField(max_length=120)
-    def get_absolute_url(self):
-        return "/group/%i/" % self.id
 
 
 

@@ -85,8 +85,8 @@ def update_tt():
 				print("{} out of {} grs".format(sch_grs.index((id, gr)), len(sch_grs)))
 				get_schedule(teachers, id, gr, courses, class_f)
 
-	ModelCourse.objects.bulk_create(teachers.values())
-	ModelCourse.objects.bulk_create([courses])
+	ModelTeacher.objects.bulk_create(teachers.values())
+	ModelCourse.objects.bulk_create(list(courses))
 	ModelClassFormat.objects.bulk_create(class_f)
 	ModelGroup.objects.bulk_create(grs)
 
