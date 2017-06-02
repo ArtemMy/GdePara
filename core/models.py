@@ -61,6 +61,10 @@ class UserProfile(models.Model):
     def full_name(self):
         return self.first_name + " " + self.middle_name + " " + self.last_name
 
+class Subject(models.Model):
+    name = models.CharField(max_length=254)
+    is_necessary = models.BooleanField()
+
 class Group(models.Model):
     starosta_id = models.OneToOneField(UserProfile, null=True)
     number = models.CharField(max_length=30)
@@ -85,10 +89,6 @@ class Course(models.Model):
     subject = models.ForeignKey('Subject')
     def get_absolute_url(self):
         return "/course/%i/" % self.id
-
-class Subject(models.Model):
-    name = models.CharField(max_length=254)
-    is_necessary = models.BooleanField()
 
 class CommonMaterial(models.Model):
     text = models.TextField()
