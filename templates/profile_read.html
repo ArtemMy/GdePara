@@ -16,6 +16,6 @@
         </p>
     {% endif %}
 	<button type="button" onclick="location.href='{% url 'profile_edit' %}'">Редактировать</button>
-	<button type="button">Присоединиться к курсу</button>
+	<button type="button" onclick="location.href='{% url 'my_courses' %}'">Мои Курсы</button>
 	<button type="button" onclick="location.href='{% url 'list_of_groups' %}'">Список групп</button>
 {% endblock %}

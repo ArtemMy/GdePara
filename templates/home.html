@@ -6,7 +6,6 @@
   {% if user.is_authenticated %}
       <h2> Привет, {{ user.first_name }}! </h2><br>
       <a class="btn btn-primary" href="{% url 'profile' %}" role=button>Просмотр профиля</a>
-      <a class="btn btn-primary" href="{% url 'list_of_courses' %}" role=button>Просмотр списка курсов</a>
       <a class="btn btn-primary" href="{% url 'auth_logout' %}" role=button>Выход</a>
     {% else %}
       <a class="btn btn-default" href="{% url 'auth_login' %}" role=button>Войти</a>

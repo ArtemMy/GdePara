@@ -48,6 +48,7 @@ urlpatterns = [
     url(r'^course/add/$', core_views.CourseCreate.as_view(), name='course_create'),
     url(r'^course/(?P<pk>\d+)/$', core_views.CourseEdit.as_view(), name='course_view'),
     url(r'^course/(?P<pk>\d+)/delete/$', core_views.CourseDelete.as_view(), name='course_delete'),
+    url(r'^course/my_courses/$', core_views.view_my_courses, name='my_courses'),
 
     url(r'^admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

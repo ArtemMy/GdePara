@@ -2,11 +2,19 @@
 
 {% block content %}
   <h2>List of Courses</h2>
+  <form method="post">
     {% csrf_token %}
     {% for c in courses %}
     <div>
 		<a href="{{c.get_absolute_url}}">{{c.name}}</a>
+		{% if user in c.users %}
+			(В моём списке)
+		{% else %}
+			<input type="submit" id="buttonId" name="{{c.name}}" value="Присоединиться к курсу">
+		{% endif %}
     </div>
     {% endfor %}
   <p><a href="{% url 'course_create' %}">создать курс</a></p>
+  <button type="button" onclick="location.href='{% url 'my_courses' %}'">Назад</button>
+  </form>
 {% endblock %}

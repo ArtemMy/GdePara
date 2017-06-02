@@ -131,8 +131,18 @@ def group_create(request):
     return render(request, 'group_form.html', {'form': form})
 
 def view_courses(request):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
     courses = Course.objects.all()
-    return render(request, 'list_of_courses.html', {'courses': courses})
+    user = UserProfile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        for c in courses:
+            if request.POST.get(c.name):
+                c.users.add(user)
+                c.save()
+
+    return render(request, 'list_of_courses.html', {'courses': courses, 'user': user})
 
 def view_groups(request):
     if request.user.is_authenticated() == False:
@@ -150,7 +160,6 @@ def view_group_information(request, pk):
 
     if request.method == 'POST':
         if request.POST.get('generate_code'):
-            print("test")
             new_code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
             secret_code = SecretCode(code=new_code)
             secret_code.save()
@@ -183,6 +192,24 @@ def view_safety_code(request, pk):
 
     form = SafetyCodeForm()
     return render(request, 'safety_code.html', {'form': form})
+
+def view_my_courses(request):
+    if request.user.is_authenticated() == False:
+        return render(request, 'index.html')
+
+    user = UserProfile.objects.get(user=request.user)
+    user_courses = Course.objects.filter(users=user)
+
+    if request.method == 'POST':
+        for c in user_courses:
+            if request.POST.get(c.name):
+                print(user in c.users)
+                c.users.remove(user)
+                c.save()
+
+    user_courses = Course.objects.filter(users=user)
+    return render(request, 'my_courses.html', {'courses': user_courses})
+
 
 class CourseCreate(CreateView):
     fields = ('name', 'report_type', 'beginning_date', 'ending_date')
