@@ -11,6 +11,7 @@ def get_schedule(teachers, id, gr, courses, class_f):
 			for lesson in day.get("lessons"):
 				if lesson["teachers"] and lesson["teachers"][0].get("id"):
 					if not lesson["teachers"][0].get("id") in teachers:
+						print("here", lesson["teachers"][0].get("id"))
 						teachers[int(lesson["teachers"][0].get("id"))] = ModelTeacher(first_name=lesson["teachers"][0]["first_name"],
 							 middle_name=lesson["teachers"][0]["middle_name"],
 							 last_name=lesson["teachers"][0]["last_name"],
@@ -19,11 +20,11 @@ def get_schedule(teachers, id, gr, courses, class_f):
 					teach = teachers[int(lesson["teachers"][0].get("id"))]
 				else:
 					teach = None
-				print("here")
+				print("here", lesson["teachers"][0].get("id"))
 				course = next((c for c in courses if c.name == lesson["subject"] and c.teacher == teach), None)
 
 				if(not course):
-					course = ModelCourse(lesson["subject"], teach)
+					course = ModelCourse(name=lesson["subject"], teacher=teach)
 					courses.add(course)
 
 				class_f.append(ModelClassFormat(day_of_week=day.get("weekday"), \

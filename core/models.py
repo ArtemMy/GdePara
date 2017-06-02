@@ -77,7 +77,7 @@ class Group(models.Model):
         return "/group/%i/safety_code/" % self.id
 
 class Course(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=254)
     report_type = models.CharField(max_length=254)
     teacher_name = models.CharField(max_length=254)
     beginning_date = models.DateField()

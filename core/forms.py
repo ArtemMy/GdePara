@@ -29,14 +29,17 @@ class UserProfileForm(ModelForm):
         fields = ['email', 'is_lecturer', 'last_name', 'first_name', 'middle_name', 'phone_number', 'degree']
 
 class ProfileRegistrationForm(forms.Form):
-    last_name = forms.CharField(label = "Фамилия (*)", max_length=30)
-    first_name = forms.CharField(label = "Имя (*)",max_length=30)
-    middle_name = forms.CharField(label = "Отчество ",max_length=30, required=False)
-    phone_number = forms.CharField(label = "Телефон ",max_length=30,  required=False)
-    email = forms.CharField(label = "Почта (*)",max_length=30)
-    password = forms.CharField(label = "Пароль (*)",max_length=30)
-    is_lecturer = forms.BooleanField(label = "Преподаватель? ", initial=True, required=False)
-    degree = forms.CharField(label = "Степень ",max_length=30,  required=False)
+	last_name = forms.CharField(label = "Фамилия (*)", max_length=30)
+	first_name = forms.CharField(label = "Имя (*)",max_length=30)
+	middle_name = forms.CharField(label = "Отчество ",max_length=30, required=False)
+	phone_number = forms.CharField(label = "Телефон ",max_length=30,  required=False)
+	email = forms.CharField(label = "Почта (*)",max_length=30)
+	password = forms.CharField(label = "Пароль (*)",max_length=30)
+	####
+	confirm_password = forms.CharField(label = "Подтвердите пароль (*)",max_length=30)
+	####
+	is_lecturer = forms.BooleanField(label = "Преподаватель? ", initial=True, required=False)
+	degree = forms.CharField(label = "Степень ",max_length=30,  required=False)
 
 class LoginForm(forms.Form):
     email = forms.CharField(label = "Почта (*)", max_length=30)
@@ -55,8 +58,8 @@ class SafetyCodeForm(forms.Form):
 
 class CourseEditForm(ModelForm):
     class Meta:
-        model = Course
+        model = Course;
         fields = ['name', 'report_type', 'beginning_date', 'ending_date']
         widgets = {
-            'beginning_date': forms.DateInput(attrs={'class':'datepicker'}),
+            'beginning_date': forms.DateInput(attrs={'class':'datepicker', 'id':'beginning_date'}),
         }
