@@ -4,25 +4,120 @@
   <meta charset="utf-8">
   <title>{% block title %}Main{% endblock %}</title>
   {% load static %}
-  
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <!-- Bootstrap -->
+
+    <link href={% static "css/bootstrap.min.css" %} rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+<style>
+.help_st {
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.bg-4 {
+    background-color: #00ff00;
+    color: #0000ff;
+}
+
+.help_link {
+    font-size: 120%;
+    display: inline-block;
+   }
+
+   .regist {
+       padding-right: 100px;
+      }
+
+</style>
+
    <!-- Bootstrap -->
     <link href={% static "css/bootstrap.min.css" %} rel="stylesheet">
 </head>
+
+
 <body>
   <header>
-    <h1><a href="{% url 'home' %}"><img src="{% static "gdepara.jpg" %}"/><br>Где пара</a></h1>
-    <h1><a href="{% url 'my-timetable' %}"><br>Расписание</a></h1>
-    {{ testme }}
+     <div class="container-fluid text-left">
+     <div class="row">
+
+       <div class="col-sm-5 font-color:#ffffff" >
+         <p  style="color:white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+       </div>
+
+         <div class="col-sm-2" >
+           <h1><a href="{% url 'home' %}"><img src="{% static "gdepara.jpg" %}"/><br>Где пара?</a></h1>
+         </div>
+
+
+        {% if user.is_authenticated %}
+        <div class="col-sm-1" style="padding-top: 70px">
+          <a class="btn btn-success" href="{% url 'my-timetable' %}" role=button>Расписание</a>
+        </div>
+        <div class="col-sm-1" style="padding-top: 70px">
+          <div class="container-fluid text-right">
+             <a class="btn btn-primary" href="{% url 'help_reg' %}" role=button>Помощь</a>
+           </div>
+        </div>
+        <div class="col-sm-1" style="padding-top: 70px">
+          <div class="container-fluid text-left">
+            <a class="btn btn-danger" href="{% url 'auth_logout' %}" role=button>Выход</a>
+          </div>
+        </div>
+        {% else %}
+        <div class="col-sm-3" style="padding-top: 70px">
+            <a class="btn btn-primary" href="{% url 'help_unreg' %}" role=button>Помощь</a>
+        </div>
+        {% endif %}
+
+
+
+    </div>
+    <div class="form-group">
+    <div class="container">
+    <div class="row">
+    <form role="search">
+    <div class="input-group">
+    <input name="number" class="form-control "id="number" placeholder="Введите номер группы">
+    <span class="input-group-btn">
+    <button class="btn btn-success" type="button">
+    <i class="glyphicon glyphicon-search"></i>
+    </button>
+    </span>
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>
+
+    <script type="text/javascript">
+    $(function() {
+    $("#number").autocomplete({
+    source: "/autocomplete/group/",
+    minLength: 2,
+    });
+    });
+    </script>
+
+
+
   </header>
+
   <hr>
   <main>
+  <div class="container-fluid bg-1 text-center">
     {% block content %}
     {% endblock %}
+  </div>
   </main>
   <!-- hr -->
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>  
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
@@ -16,23 +17,23 @@ import random, string
 from dal import autocomplete
 
 class GroupAutoCompleteView(ModelGroup):
-	def get(self,request,*args,**kwargs):
-		data = request.GET
-		number = data.get("term")
-		if number:
-			groups = ModelGroup.objects.filter(number__icontains= number)
-		else:
-			groups = ModelGroup.objects.all()
-			results = []
-		for group in groups:
-			group_json = {}
-			group_json['id'] = group.id
-			group_json['label'] = group.number
-			group_json['value'] = group.number
-			results.append(group_json)
-			data = json.dumps(results)
-			mimetype = 'application/json'
-		return HttpResponse(data, mimetype)
+    def get(self,request,*args,**kwargs):
+        data = request.GET
+        number = data.get("term")
+        if number:
+            groups = ModelGroup.objects.filter(number__icontains= number)
+        else:
+            groups = ModelGroup.objects.all()
+            results = []
+        for group in groups:
+            group_json = {}
+            group_json['id'] = group.id
+            group_json['label'] = group.number
+            group_json['value'] = group.number
+            results.append(group_json)
+            data = json.dumps(results)
+            mimetype = 'application/json'
+        return HttpResponse(data, mimetype)
 
 
 class GroupAutocomplete(autocomplete.Select2QuerySetView):
@@ -47,24 +48,27 @@ def my_timetable(request):
         return render(request, 'index.html')
     user = UserProfile.objects.get(user=request.user)
     user_courses = list(Course.objects.filter(users_allowed=user))
-    if user.is_lecturer:    
+    if user.is_lecturer:
         user_courses += list(Course.objects.filter(groups_allowed=user.group_key))
     user_courses = ModelCourse.objects.all()[:5]
     return render(request, 'timetable.html', {'courses': user_courses},  RequestContext(request))
 
-def profile_read(request):
-    profile = UserProfile.objects.get(user=request.user)
-    print(len(ModelGroup.objects.all()))
-
-    if request.user.is_authenticated() == False:
-        return render(request, 'index.html')
-
-    if request.method == 'POST':
-        profile.group_key = None
-        profile.save()
-        return HttpResponseRedirect('/profile')
-
-    return render(request, 'profile_read.html', {'user': profile},  RequestContext(request))
+def get_timetable(request):
+    timestamp = request.GET.get('at', '')
+    data = [{
+      'title': u'Obrabotka signalov',
+      'start': '8:00',
+      'end': '10:00',
+      'teacher': 'Savchuk D. A.',
+      'cabinet': 1
+    }, {
+      'title': 'Signali obrabotki',
+      'start': '8:00',
+      'end': '10:00',
+      'teacher': 'Savchuk D. A.',
+      'cabinet': 1
+    }]
+    return JsonResponse(data, safe=False)
 
 def profile_read(request):
     profile = UserProfile.objects.get(user=request.user)
@@ -283,6 +287,12 @@ class CourseDelete(DeleteView):
     model = Course
     template_name = 'confirm_delete.html'
     success_url = '/list_of_courses'
+
+def view_help_reg(request):
+    return render(request, 'help_reg.html')
+
+def view_help_unreg(request):
+    return render(request, 'help_unreg.html')
 
 def index(request):
     return HttpResponse("Hello, world. Novikov <3.")

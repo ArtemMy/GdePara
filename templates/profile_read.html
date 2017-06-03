@@ -1,22 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Мой профиль</h2>
-	{% if user.is_lecturer == True %}<p>Преподаватель</p> {% else %} <p>Студент</p>{% endif %}
-		<p>Почта: {{user.email}}</p>
-		<p>Имя: {{user.first_name}} {{user.middle_name}} {{user.last_name}}</p>
-		<p>Телефон: {{user.phone_number}}</p>
-    {% if user.group_key.starosta_id.id == user.id %}
-        <p>Группа:
-        <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}} (Староста)</a>
-        </p>
-    {% else %}
-        <p>Группа:
-        <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}}</a>
-        </p>
-    {% endif %}
-	<a class="btn btn-success" onclick="location.href='{% url 'profile_edit' %}'">Редактировать</a>
-	<a class="btn btn-success" onclick="location.href='{% url 'my_courses' %}'">Мои курсы</a>
-	<a class="btn btn-success" onclick="location.href='{% url 'list_of_groups' %}'">Список групп</a>
-	
+<div class="container-fluid text-left">
+<div class="row content">
+  <div class="col-sm-4 font-color:#ffffff" >
+    <p  style="color:white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+  </div>
+
+
+    <div class="col-sm-4" >
+      <h2>Мой профиль</h2>
+      {% if user.is_lecturer == True %}<p>Преподаватель</p> {% else %} <p>Студент</p>{% endif %}
+        <p>Почта: {{user.email}}</p>
+        <p>Имя: {{user.first_name}} {{user.middle_name}} {{user.last_name}}</p>
+        <p>Телефон: {{user.phone_number}}</p>
+        {% if user.group_key.starosta_id.id == user.id %}
+            <p>Группа:
+            <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}} (Староста)</a>
+            </p>
+        {% else %}
+            <p>Группа:
+            <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}}</a>
+            </p>
+        {% endif %}
+        <a class="btn btn-success" onclick="location.href='{% url 'profile_edit' %}'">Редактировать</a>
+        <a class="btn btn-success" onclick="location.href='{% url 'my_courses' %}'">Мои курсы</a>
+        <a class="btn btn-success" onclick="location.href='{% url 'list_of_groups' %}'">Список групп</a>
+
+    </div>
+
+    <div class="col-sm-4 font-color:#ffffff" >
+      <p  style="color:white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+</div>
+</div>
 {% endblock %}

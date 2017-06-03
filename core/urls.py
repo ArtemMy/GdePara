@@ -27,11 +27,11 @@ from core.views import LoginView, SignupView
 from core.scrape_poly_t import setup
 
 urlpatterns = [
-    url(r'accounts/register/$', 
-            SignupView, 
+    url(r'accounts/register/$',
+            SignupView,
             name = 'registration_register'),
-    url(r'accounts/login/$', 
-            LoginView, 
+    url(r'accounts/login/$',
+            LoginView,
             name = 'auth_login'),
 
     url(r'^accounts/', include('registration.backends.default.urls')),
@@ -46,15 +46,17 @@ urlpatterns = [
     url(r'^group/(?P<pk>\d+)/$', core_views.view_group_information, name='group_view'),
     url(r'^group/(?P<pk>\d+)/safety_code/$', core_views.view_safety_code, name='safety_code'),
     #url(r'^group/(?P<pk>\d+)/delete/$', core_views.GroupDelete.as_view(), name='group_delete'),
-#    url(r'^course/add/$', core_views.CourseCreate.as_view(), name='course_create'),
-	url(r'^course/add/$', core_views.create_course, name='course_create'),
+    #url(r'^course/add/$', core_views.CourseCreate.as_view(), name='course_create'),
+    url(r'^course/add/$', core_views.create_course, name='course_create'),
     url(r'^course/(?P<pk>\d+)/$', core_views.CourseEdit.as_view(), name='course_view'),
     url(r'^course/(?P<pk>\d+)/delete/$', core_views.CourseDelete.as_view(), name='course_delete'),
     url(r'^course/my_courses/$', core_views.view_my_courses, name='my_courses'),
     url(r'^group-autocomplete/$', core_views.GroupAutocomplete.as_view(), name='group-autocomplete'),
     url(r'^my-timetable/$', core_views.my_timetable, name='my-timetable'),
+    url(r'^get_timetable/$', core_views.get_timetable, name='get_timetable'),
 	#url(r'^group-autocomplete/$',core_views.GroupAutoCompleteView.as_view(), name='group-autocomplete'),
-
+    url(r'^help_unreg/$', core_views.view_help_unreg, name='help_unreg'),
+    url(r'^help_reg/$', core_views.view_help_reg, name='help_reg'),
     url(r'^admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

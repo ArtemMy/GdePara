@@ -1,61 +1,58 @@
+<html>
 <head>
   <meta charset="utf-8">
   <title>{% block title %}Main{% endblock %}</title>
   {% load static %}
   
    <!-- Bootstrap -->
-    <link href={% static "css/bootstrap.min.css" %} rel="stylesheet">
+  <link href={% static "css/bootstrap.min.css" %} rel="stylesheet">
+  
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+  <script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+  <script src='{% static "js/timetable.js" %}'></script>
 </head>
-  <header>
-    <h1><a href="{% url 'home' %}"><img src="{% static "gdepara.jpg" %}"/><br>Где пара</a></h1>
-    <h1><a href="{% url 'my-timetable' %}"><br>Расписание</a></h1>
-    {{ testme }}
-  </header>
-
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-<script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 <body>
+<header>
+  <h1><a href="{% url 'home' %}"><img src="{% static "gdepara.jpg" %}"/><br>Где пара</a></h1>
+  <h1><a href="{% url 'my-timetable' %}"><br>Расписание</a></h1>
+  {{ testme }}
+</header>
 <div id="left" width='50%'>
-<div class="col-lg-8 datepicker_area" style="background: white;">
-  <div style="overflow:hidden;">
-    <div class="form-group">
-      <div class="row">
-        <div class="col-md-8">
-          <div id="datetimepicker" data-date="03/12/2012"></div>
-          <input type="hidden" name="date" id="my_hidden_input" value="">
+  <div class="col-lg-6 datepicker_area" style="background: white;">
+    <div style="overflow:hidden;">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
+            <div id="datetimepicker" data-date="03/12/2012"></div>
+            <input type="hidden" name="date" id="my_hidden_input" value="">
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="col-md-4 col-md-offset-1" id="day-content">
+  </div>
+  <table class="table table-bordered" id="day-content-item" style="display:none">
+    <thead>
+    <tr class="success"> <th colspan="2" class="item-title">title</th></tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="item-start">11</td>
+      <td class="item-teacher">12</td>
+    </tr>
+    <tr>
+      <td class="item-end">21</td>
+      <td class="item-cabinet">22</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
-		<script type="text/javascript">
 
-			$("#datetimepicker").on("changeDate", function(event) {
-				$("input[type='hidden'][name='date']").val(
-						$('#datetimepicker').datepicker('getFormattedDate')
-				)
-			});
+</body>
+</html>
 
-		$(function() {
-		  $('#datetimepicker').datetimepicker({
-		    format: 'DD/MM/YYYY',
-			inline: true,
-			sideBySide: true
-		  });
-		  $('#datetimepicker').on('dp.change', function(event) {
-			//console.log(moment(event.date).format('MM/DD/YYYY h:mm a'));
-			//console.log(event.date.format('MM/DD/YYYY h:mm a'));
-			$('#selected-date').text(event.date);
-			var formatted_date = event.date.format('DD/MM/YYYY');
-			$('#my_hidden_input').val(formatted_date);
-			$('#hidden-val').text($('#my_hidden_input').val());
-		  });
-		});
-		</script>
-	</div>
-</div>
-</div>

@@ -4,9 +4,8 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-      <h2> Привет, {{ user.first_name }}! </h2><br>
+      <h2> Здравствуйте, {{ user.first_name }}! </h2><br>
       <a class="btn btn-success" href="{% url 'profile' %}" role=button>Просмотр профиля</a>
-      <a class="btn btn-success" href="{% url 'auth_logout' %}" role=button>Выход</a>
     {% else %}
       <a class="btn btn-success" href="{% url 'auth_login' %}" role=button>Войти</a>
       <a class="btn btn-success" href="{% url 'registration_register' %}" role=button>Зарегистрироваться</a>

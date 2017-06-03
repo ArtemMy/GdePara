@@ -34,6 +34,9 @@ class ModelCourse(models.Model):
     groups = models.ManyToManyField(ModelGroup, null=True)
     def get_absolute_url(self):
         return "/course/%i/" % self.id
+    def from_model(self):
+        return Course(name=self.name, teacher_name=self.teacher.name, model_groups=self.groups)
+
 
 class ModelClassFormat(models.Model):
     day_of_week = models.IntegerField()
@@ -44,6 +47,12 @@ class ModelClassFormat(models.Model):
     auditorium = models.CharField(max_length=30)
     week_number = models.IntegerField()
     course = models.ForeignKey(ModelCourse, on_delete=models.CASCADE, null=True)
+    def from_model(this, c):
+        return ClassFormat(day_of_week=this.day_of_week, course=c,
+            type_of_class=this.type_of_class, time_of_beginning=this.time_of_beginning,
+            time_of_ending=this.time_of_ending, building=this.building,
+            auditorium=this.auditorium, week_number=this.week_number)
+
 
 class UserProfile(models.Model):
     user = models.ForeignKey('auth.User')
