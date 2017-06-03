@@ -64,6 +64,10 @@ def get_timetable(request):
         data += ModelClassFormat.objects.filter(course=c)
     return JsonResponse(data, safe=False)
 
+def create_gr(request):
+    print(request.POST['create_gr'])
+    return render(request, 'profile_read.html', {'output': "success"})
+
 def profile_read(request):
     profile = UserProfile.objects.get(user=request.user)
     e = list(ModelGroup.objects.values("number"))
@@ -72,11 +76,11 @@ def profile_read(request):
     if request.user.is_authenticated() == False:
         return render(request, 'index.html')
 
-    if request.method == 'POST':
-        print(c.id)
-        profile.group_key = lst[request.POST['create_gr']]
-        profile.save()
-        return HttpResponseRedirect('/profile')
+    # if request.method == 'POST':
+    #     print(c.id)
+    #     profile.group_key = lst[request.POST['create_gr']]
+    #     profile.save()
+    #     return HttpResponseRedirect('/profile')
     print(lst)
     return render(request, 'profile_read.html', {'user': profile, 'grs':lst},  RequestContext(request))
 

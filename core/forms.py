@@ -19,13 +19,9 @@ class UserProfileForm(ModelForm):
         self.fields['phone_number'].label = "Телефон"
         self.fields['degree'].required = False
         self.fields['degree'].label = "Степень"
-    def groups():
-        e = list(ModelGroup.objects.values("number"))
-        lst = list(map(lambda x: (e.index(x), x['number']), e))
-        return lst
     class Meta:
         model = UserProfile
-        fields = ['email', 'group_key', 'last_name', 'first_name', 'middle_name', 'phone_number', 'degree']
+        fields = ['email', 'last_name', 'first_name', 'middle_name', 'phone_number', 'degree']
 
 class ProfileRegistrationForm(forms.Form):
 	last_name = forms.CharField(label = "Фамилия (*)", max_length=30)

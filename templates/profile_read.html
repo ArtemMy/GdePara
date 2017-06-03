@@ -14,26 +14,44 @@
         <p>Почта: {{user.email}}</p>
         <p>Имя: {{user.first_name}} {{user.middle_name}} {{user.last_name}}</p>
         <p>Телефон: {{user.phone_number}}</p>
-        {% if user.group_key.starosta_id.id == user.id %}
-            <p>Группа:
-            <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}} (Староста)</a>
-            </p>
-        {% else %}
-            <p>Группа:
-            <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}}</a>
-            <form method="POST">
-            <select name="create_gr">
-            {% for g in grs %}
-                <option value="{{ g.number }}">{{ g.number }}</option>
-            {% endfor %}
-            </select>
-            </form>      
-            </p>
+        {% if not user.is_lecturer %}
+            {% if not user.group_key %}
+
+                <form method="POST">
+                <select name="select_gr">
+                {% for g in grs %}
+                    <option value="{{ g.number }}">{{ g.number }}</option>
+                {% endfor %}
+                </select>
+                <button id="create_group" type="button">Создать группу </button>
+                </form>
+            {% else %}
+                {% if user.group_key.starosta_id.id == user.id %}
+                    <p>Группа:
+                    <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}} (Староста)</a>
+                    </p>
+                {% else %}
+                    <p>Группа:
+                    <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}}</a>
+                    user
+                    </p>
+                {% endif %}
+
+                <button id="myClickButton" type="button">Отсоединиться от группы:</button>
+            {% endif %}
         {% endif %}
+        <script>
+            var csrf_token = '{% csrf_token %}';
+            $("#create_gr").click( function() {
+                alert($("#select_gr").val())
+                $.post("create_group", {'group' : $("#select_gr").val()}, function (data) {
+                    alert(data)
+                });
+            });
+        </script>
         <a class="btn btn-success" onclick="location.href='{% url 'profile_edit' %}'">Редактировать</a>
         <a class="btn btn-success" onclick="location.href='{% url 'my_courses' %}'">Мои курсы</a>
         <a class="btn btn-success" onclick="location.href='{% url 'list_of_groups' %}'">Список групп</a>
-
     </div>
 
     <div class="col-sm-4 font-color:#ffffff" >
