@@ -19,11 +19,10 @@ class UserProfileForm(ModelForm):
         self.fields['phone_number'].label = "Телефон"
         self.fields['degree'].required = False
         self.fields['degree'].label = "Степень"
-        # lst = Queryset(map(lambda x: x['number'], ModelGroup.objects.values("number")))
-        # self.fields['group_key'] = forms.ModelChoiceField(queryset=lst)
-        self.fields['group_key'] = forms.ModelChoiceField(queryset=ModelGroup.objects.values("number"))
-        self.fields['group_key'].required = False
-        self.fields['group_key'].label = "Групп"
+    def groups():
+        e = list(ModelGroup.objects.values("number"))
+        lst = list(map(lambda x: (e.index(x), x['number']), e))
+        return lst
     class Meta:
         model = UserProfile
         fields = ['email', 'group_key', 'last_name', 'first_name', 'middle_name', 'phone_number', 'degree']

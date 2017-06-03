@@ -21,6 +21,13 @@
         {% else %}
             <p>Группа:
             <a href="{{user.group_key.get_absolute_url}}">{{user.group_key.number}}</a>
+            <form method="POST">
+            <select name="create_gr">
+            {% for g in grs %}
+                <option value="{{ g.number }}">{{ g.number }}</option>
+            {% endfor %}
+            </select>
+            </form>      
             </p>
         {% endif %}
         <a class="btn btn-success" onclick="location.href='{% url 'profile_edit' %}'">Редактировать</a>

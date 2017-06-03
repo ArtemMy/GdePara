@@ -55,54 +55,50 @@ def my_timetable(request):
 
 def get_timetable(request):
     timestamp = request.GET.get('at', '')
-    data = [{
-      'title': u'Obrabotka signalov',
-      'start': '8:00',
-      'end': '10:00',
-      'teacher': 'Savchuk D. A.',
-      'cabinet': 1
-    }, {
-      'title': 'Signali obrabotki',
-      'start': '8:00',
-      'end': '10:00',
-      'teacher': 'Savchuk D. A.',
-      'cabinet': 1
-    }]
+    user = UserProfile.objects.get(user=request.user)
+    user_courses = list(ModelCourse.objects.filter(users_allowed=user))
+    if user.is_lecturer:
+        user_courses += list(ModelCourse.objects.filter(groups_allowed=user.group_key))
+    data = []
+    for c in user_courses:
+        data += ModelClassFormat.objects.filter(course=c)
     return JsonResponse(data, safe=False)
 
 def profile_read(request):
     profile = UserProfile.objects.get(user=request.user)
-    print(len(ModelGroup.objects.all()))
+    e = list(ModelGroup.objects.values("number"))
+    lst = list(map(lambda x: x['number'], e))
 
     if request.user.is_authenticated() == False:
         return render(request, 'index.html')
 
     if request.method == 'POST':
-        profile.group_key = None
+        print(c.id)
+        profile.group_key = lst[request.POST['create_gr']]
         profile.save()
         return HttpResponseRedirect('/profile')
-
-    return render(request, 'profile_read.html', {'user': profile},  RequestContext(request))
+    print(lst)
+    return render(request, 'profile_read.html', {'user': profile, 'grs':lst},  RequestContext(request))
 
 def profile_edit(request):
     if request.user.is_authenticated() == False:
         return render(request, 'index.html')
+    profile = UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
 
         profile = UserProfile.objects.get(user=request.user)
-        profile.is_lecturer = bool(request.POST.get("is_lecturer", False))
         profile.first_name = request.POST["first_name"]
         profile.middle_name = request.POST.get("middle_name", "")
         profile.last_name = request.POST["last_name"]
         profile.phone_number = request.POST.get("phone_number", "")
-        profile.email = request.POST["email"]
-        profile.degree = request.POST.get("degree", "")
+        if profile.is_lecturer:
+            profile.degree = request.POST.get("degree", "")
 
         profile.save()
         return HttpResponseRedirect('/profile')
-
-    profile = UserProfile.objects.get(user=request.user)
     form = UserProfileForm(instance = profile)
+    if not profile.is_lecturer:
+        del form.fields["degree"]
     return render(request, 'profile_edit.html', {'form': form})
 
 def LoginView(request):
@@ -111,6 +107,7 @@ def LoginView(request):
         password = request.POST['password']
         user = authenticate(username=email, password=password)
         form = LoginForm()
+
         if(user == None):
             return render(request, 'login.html', {'form': form, 'error' : "wrong email or password"})
         else:
@@ -141,7 +138,6 @@ def SignupView(request):
             profile.last_name = request.POST["last_name"]
             profile.phone_number = request.POST.get("phone_number", "")
             profile.email = request.POST["email"]
-            profile.degree = request.POST.get("degree", "")
             profile.save()
 
             #group = Group(number = "100/1")
@@ -295,4 +291,4 @@ def view_help_unreg(request):
     return render(request, 'help_unreg.html')
 
 def index(request):
-    return HttpResponse("Hello, world. Novikov <3.")
+    return HttpResponse("Unauthorized.")
