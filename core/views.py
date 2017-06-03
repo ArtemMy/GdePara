@@ -238,7 +238,6 @@ def view_safety_code(request, pk):
         return render(request, 'index.html')
 
     if request.method == 'POST':
-        print("lalala")
         code = request.POST.get('code', '')
         try:
             get_code = SecretCode.objects.get(code=code)
