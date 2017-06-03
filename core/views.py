@@ -170,7 +170,11 @@ def create_course(request):
         new_subj.save()
         new_course = Course(name=name, subject=new_subj, report_type=report_type, beginning_date=beginning_date, ending_date=ending_date)
         new_course.save()
-        return redirect('list_of_courses')
+        profile = UserProfile.objects.get(user=request.user)
+        if not profile.is_lecturer:
+            new_course.groups_allowed.add(profile.group)
+        new_course.users_allowed.add(profile)
+        return redirect('my_courses')
     else:
         form = CourseEditForm()
     return render(request, 'cource_form.html', {'form': form})
@@ -180,7 +184,6 @@ def group_create(request):
         return render(request, 'index.html')
     if request.method == 'POST':
         number = request.POST.get('number', '')
-        profile = UserProfile.objects.get(user=request.user)
         group = Group(starosta_id=profile, number=number)
         group.save()
         profile.group_key = group

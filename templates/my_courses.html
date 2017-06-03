@@ -8,9 +8,11 @@
     <div>
 		<p>{{c.name}}, Дата начала: {{c.beginning_date}}, Дата окончания: {{c.ending_date}}, Тип отчетности: {{c.report_type}}
 		<input type="submit" id="buttonId" name="{{c.name}}" value="Удалить курс">
+    <input type="submit" id="buttonId2" name="{{c.name}}" value="Добавить конспект">
 		</p>
     </div>
     {% endfor %}
+    <p><a href="{% url 'course_create' %}">создать курс</a></p>
     <button type="button" class="btn btn-success" onclick="location.href='{% url 'profile' %}'">Назад</button>
   </form>
 {% endblock %}

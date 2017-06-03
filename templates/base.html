@@ -80,9 +80,9 @@
     <div class="row">
     <form role="search">
     <div class="input-group">
-    <input name="number" class="form-control "id="number" placeholder="Введите номер группы">
+    <input name="number" id="number" class="form-control" placeholder="Введите номер группы">
     <span class="input-group-btn">
-    <button class="btn btn-success" type="button">
+    <button class="btn btn-success" name="search_b" id="search_b" type="button">
     <i class="glyphicon glyphicon-search"></i>
     </button>
     </span>
@@ -91,6 +91,12 @@
     </div>
     </div>
     </div>
+    <script>
+        var csrf_token = '{% csrf_token %}';
+        $("#search_b").click( function() {
+            alert()
+            });
+    </script>
 
     <script type="text/javascript">
     $(function() {
