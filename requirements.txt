@@ -4,7 +4,7 @@ certifi==2016.9.26
 cycler==0.10.0
 dj-database-url==0.4.2
 dj-static==0.0.6
-Django==1.11.1
+Django==1.11.28
 django-registration==2.2
 django-toolbelt==0.0.1
 google-api-python-client==1.5.0
