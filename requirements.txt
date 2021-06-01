@@ -31,7 +31,7 @@ SQLAlchemy==1.1.1
 static3==0.7.0
 stemming==1.0.1
 uritemplate==0.6
-urllib3==1.18
+urllib3==1.26.5
 virtualenv==15.1.0
 whitenoise==3.3.0
 XlsxWriter==0.9.6
